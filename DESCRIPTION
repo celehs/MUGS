@@ -1,0 +1,38 @@
+Package: MUGS
+Type: Package
+Title: Multisource Graph Synthesis with EHR data
+Version: 0.1.0
+Author: Steven Cai <1xuanmnengcai@gmail.com>
+        Mengyan Li <mengyanli@bentley.edu>
+        Tianxi Cai <tcai@hsph.harvard.edu>
+Maintainer: Steven Cai <1xuanmnengcai@gmail.com>
+            Mengyan Li <mengyanli@bentley.edu>
+            Tianxi Cai <tcai@hsph.harvard.edu>
+Description: We develop MUlti-source Graph Synthesis (MUGS), an algorithm designed to create 
+    embeddings for pediatric EHR codes by leveraging graphical information from three distinct sources：
+    (1) pediatric EHR data, (2) EHR data from the general patient population, and 
+    (3) existing hierarchical medical ontology knowledge shared across different patient populations.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
+URL: https://github.com/Xuanmengcai/MUGS
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+Imports:
+  MASS,
+  Matrix,
+  fastDummies,
+  doSNOW,
+  dplyr,
+  foreach,
+  glmnet,
+  grpreg,
+  mvtnorm,
+  pROC,
+  parallel,
+  rsvd
+Depends: 
+    R (>= 2.10)

@@ -1,0 +1,27 @@
+#'Function For Getting Embedding From SVD
+#'
+#' @param mysvd the (managed) svd result (adding an element with 'names')
+#' @param d dim of the final embedding
+#' @param normalize if the output embeddings have l2 norm equal to 1
+#'
+#' @return The embedding from SVD
+#' @export
+#'
+#' @examples
+#' set.seed(1)
+#' S <- matrix(rnorm(100^2), 100, 100)
+#' library(rsvd)
+#' svd <- rsvd(S, 20)
+#' U <- get_embed(svd, d=10, normalize=TRUE)
+
+get_embed = function(mysvd, d=2000, normalize=TRUE){
+  id = which(sign(mysvd$u[1,])==sign(mysvd$v[1,]))
+  id = id[1:min(d,length(id))]
+  embed = mysvd$u[,id]%*%diag(sqrt(mysvd$d[id]))
+  if(normalize){
+    embed = embed/apply(embed,1,norm,'2')
+  }
+  rownames(embed) = mysvd$names
+  return(embed)
+}
+
