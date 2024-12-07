@@ -15,11 +15,13 @@ Description: We develop MUlti-source Graph Synthesis (MUGS), an algorithm design
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
+LazyDataCompression: xz
 RoxygenNote: 7.3.2
-URL: https://github.com/Xuanmengcai/MUGS
+URL: https://github.com/celehs/MUGS, https://github.com/celehs/MUGS.git
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Imports:
   MASS,
@@ -33,6 +35,8 @@ Imports:
   mvtnorm,
   pROC,
   parallel,
-  rsvd
+  rsvd,
+  methods
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5.0)
+Config/testthat/edition: 3
