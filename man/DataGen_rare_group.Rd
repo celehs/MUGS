@@ -64,23 +64,3 @@ Returns input data, SPPMIs, dummy matrices based on prior group structures and c
 Function used to generate input data (used only for Simulations)
 Generate SPPMIs, dummy matrices based on prior group structures, and code-code pairs for tuning and evaluation
 }
-\examples{
-DataGen.out <- DataGen_rare_group(
-  seed = 1,
-  p = 100,
-  n1 = 2000,
-  n2 = 2000,
-  n.common = 1000,
-  n.group = 400,
-  sigma.eps.1 = 5,
-  sigma.eps.2 = 20,
-  sigma.rare = 80,
-  ratio.delta = 0.05,
-  network.k = 50,
-  rho.beta = 0.4,
-  rho.U0 = 0.4,
-  rho.delta = 0.95,
-  n.rare = 700,
-  group.size = 5
-)
-}

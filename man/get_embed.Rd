@@ -19,10 +19,3 @@ The embedding from SVD
 \description{
 Function For Getting Embedding From SVD
 }
-\examples{
-set.seed(1)
-S <- matrix(rnorm(100^2), 100, 100)
-library(rsvd)
-svd <- rsvd(S, 20)
-U <- get_embed(svd, d=10, normalize=TRUE)
-}

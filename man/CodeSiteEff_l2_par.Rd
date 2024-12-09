@@ -56,17 +56,3 @@ The output for the estimation of code-site effects
 \description{
 Function Used To Estimate Code-Site Effects Parallelly
 }
-\examples{
-S1_data <- system.file("extdata", "S.1.Rdata", package = "MUGS")
-load(S1_data)
-S2_data <- system.file("extdata", "S.2.Rdata", package = "MUGS")
-load(S2_data)
-U1_data <- system.file("extdata", "U.1.Rdata", package = "MUGS")
-load(U1_data)
-U2_data <- system.file("extdata", "U.2.Rdata", package = "MUGS")
-load(U2_data)
-X_group_source_data <- system.file("extdata", "X.group.source.Rdata", package = "MUGS")
-load(X_group_source_data)
-X_group_target_data <- system.file("extdata", "X.group.target.Rdata", package = "MUGS")
-load(X_group_target_data)
-}

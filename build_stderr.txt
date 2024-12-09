@@ -1,0 +1,6 @@
+── Installing package MUGS into temporary library ──────────────────────────────
+Error : ! in callr subprocess.
+Caused by error in `build_reference()`:
+! Failed to parse Rd in [34mCodeEff_Matrix.Rd[39m
+Caused by error in `output_handler$source()`:
+! argument "expr" is missing, with no default

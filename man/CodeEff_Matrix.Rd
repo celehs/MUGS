@@ -20,43 +20,33 @@ CodeEff_Matrix(
 )
 }
 \arguments{
-\item{S.1}{SPPMI from the source site}
+\item{S.1}{SPPMI from the source site.}
 
-\item{S.2}{SPPMI from the target site}
+\item{S.2}{SPPMI from the target site.}
 
-\item{n1}{the number of codes from the source site}
+\item{n1}{The number of codes from the source site.}
 
-\item{n2}{the number of codes from the target site}
+\item{n2}{The number of codes from the target site.}
 
-\item{U.1}{the left embeddings (left singular vectors times the square root of the singular values) from the source site}
+\item{U.1}{The left embeddings left singular vectors times the square root of the singular values from the source site.}
 
-\item{U.2}{the left embeddings (left singular vectors times the square root of the singular values) from the target site}
+\item{U.2}{The left embeddings left singular vectors times the square root of the singular values from the target site.}
 
-\item{V.1}{the right embeddings (right singular vectors times the square root of the singular values) from the source site}
+\item{V.1}{The right embeddings right singular vectors times the square root of the singular values from the source site.}
 
-\item{V.2}{the right embeddings (right singular vectors times the square root of the singular values) from the target site}
+\item{V.2}{The right embeddings right singular vectors times the square root of the singular values from the target site.}
 
-\item{common_codes}{the list of overlapping codes}
+\item{common_codes}{The list of overlapping codes.}
 
-\item{zeta.int}{the initial estimator for the code effects}
+\item{zeta.int}{The initial estimator for the code effects.}
 
-\item{lambda}{the tuning parameter controls the intensity of penalization on the code effect}
+\item{lambda}{The tuning parameter controls the intensity of penalization on the code effect.}
 
-\item{p}{the length of an embedding}
+\item{p}{The length of an embedding.}
 }
 \value{
-The output for the estimation of code effects
+A list with the following elements:
 }
 \description{
-Function Used To Estimate Code Effects
-}
-\examples{
-S1_data <- system.file("extdata", "S.1.Rdata", package = "MUGS")
-load(S1_data)
-S2_data <- system.file("extdata", "S.2.Rdata", package = "MUGS")
-load(S2_data)
-U1_data <- system.file("extdata", "U.1.Rdata", package = "MUGS")
-load(U1_data)
-U2_data <- system.file("extdata", "U.2.Rdata", package = "MUGS")
-load(U2_data)
+This function estimates code effects using left and right embeddings from source and target sites.
 }

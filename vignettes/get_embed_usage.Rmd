@@ -1,0 +1,81 @@
+---
+title: "get_embed Usage"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{get_embed Usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+The `get_embed` function retrieves embeddings based on provided input data. This vignette demonstrates the usage of the `get_embed` function with example datasets included in the `MUGS` package.
+
+---
+
+## Load the Required Library
+
+Ensure the `MUGS` package is loaded before running the example:
+
+```{r setup}
+library(MUGS)
+```
+
+---
+
+## Load Example Data
+
+Load the example datasets for the `get_embed` function:
+
+```{r load_data}
+set.seed(1)
+S <- matrix(rnorm(100^2), 100, 100)
+library(rsvd)
+svd <- rsvd(S, 20)
+```
+
+---
+
+## Run the `get_embed` Function
+
+Run the `get_embed` function to extract embeddings from the data:
+
+```{r run_function}
+# Example usage of get_embed
+U <- get_embed(svd, d=10, normalize=TRUE)
+```
+
+---
+
+## Examine the Output
+
+Explore the structure and key components of the output:
+
+```{r examine_output}
+# View the structure of the output
+str(U)
+
+# Display the first few rows of the results
+cat("\nEmbedding Results (first 5 rows):\n")
+print(head(U, 5))
+```
+
+---
+
+## Notes
+
+1. **Input Data**: Ensure that `U.1` and `S.1` are properly formatted matrices or data frames.
+2. **Output Structure**: The output contains embeddings derived from the input data, which can be used in downstream analysis.
+
+---
+
+## Summary
+
+This vignette demonstrated the use of the `get_embed` function to retrieve embeddings from input data. Use this function to process your data and extract meaningful embeddings for further applications.

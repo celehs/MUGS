@@ -59,18 +59,3 @@ The final result
 \description{
 Main function for MUGS algorithm
 }
-\examples{
-S1_data <- system.file("extdata", "S.1.Rdata", package = "MUGS")
-load(S1_data)
-S2_data <- system.file("extdata", "S.2.Rdata", package = "MUGS")
-load(S2_data)
-pairs_rel_CV_data <- system.file("extdata", "pairs.rel.CV.Rdata", package = "MUGS")
-load(pairs_rel_CV_data)
-pairs_rel_EV_data <- system.file("extdata", "pairs.rel.EV.Rdata", package = "MUGS")
-load(pairs_rel_EV_data)
-X_group_source_data <- system.file("extdata", "X.group.source.Rdata", package = "MUGS")
-load(X_group_source_data)
-X_group_target_data <- system.file("extdata", "X.group.target.Rdata", package = "MUGS")
-load(X_group_target_data)
-
-}

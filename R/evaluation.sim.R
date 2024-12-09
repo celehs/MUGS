@@ -10,12 +10,6 @@
 #' @return The output of tuning and evaluation
 #' @export
 #'
-#' @examples
-#' pairs_rel_EV_data <- system.file("extdata", "pairs.rel.EV.Rdata", package = "MUGS")
-#' load(pairs_rel_EV_data)
-#' U2_data <- system.file("extdata", "U.2.Rdata", package = "MUGS")
-#' load(U2_data)
-#' evaluation.sim(pairs.rel.EV, U.2)
 
 evaluation.sim <- function(pairs.rel, U){
   required_packages <- c("dplyr", "pROC")

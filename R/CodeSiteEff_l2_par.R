@@ -9,6 +9,7 @@
 #' @importFrom dplyr anti_join
 #' @importFrom mvtnorm rmvnorm
 #'
+#'
 #' @param S.1 SPPMI from the source site
 #' @param S.2 SPPMI from the target site
 #' @param n1 the number of codes from the source site
@@ -27,31 +28,10 @@
 #' @return The output for the estimation of code-site effects
 #' @export
 #'
-#' @examples
-#' S1_data <- system.file("extdata", "S.1.Rdata", package = "MUGS")
-#' load(S1_data)
-#' S2_data <- system.file("extdata", "S.2.Rdata", package = "MUGS")
-#' load(S2_data)
-#' U1_data <- system.file("extdata", "U.1.Rdata", package = "MUGS")
-#' load(U1_data)
-#' U2_data <- system.file("extdata", "U.2.Rdata", package = "MUGS")
-#' load(U2_data)
-#' X_group_source_data <- system.file("extdata", "X.group.source.Rdata", package = "MUGS")
-#' load(X_group_source_data)
-#' X_group_target_data <- system.file("extdata", "X.group.target.Rdata", package = "MUGS")
-#' load(X_group_target_data)
-# 'names.list.1 <- rownames(S.1)
-# 'names.list.2 <- rownames(S.2)
-# 'common_codes <- intersect(names.list.1, names.list.2)
-# 'full.name.list <- c(names.list.1, names.list.2)
-# 'delta.int <- matrix(0, 4000, 10)
-# 'rownames(delta.int) <- full.name.list
-# 'CodeSiteEff_l2_par.out <-  CodeSiteEff_l2_par(S.1 = S.1, S.2 = S.2, n1 = 2000, n2 =2000, U.1 = U.1, U.2 = U.2, V.1= U.1, V.2 = U.2,
-# '                                              delta.int = delta.int, lambda.delta = 1000, p=10, common_codes = common_codes, n.common = 1000, n.core=2)
 
 
-CodeSiteEff_l2_par <- function(S.1, S.2, n1, n2, U.1, U.2, V.1, V.2, delta.int, lambda.delta, p, common_codes, n.common, n.core){
-  utils::globalVariables("i")
+CodeSiteEff_l2_par <- function(S.1, S.2, n1, n2, U.1, U.2, V.1, V.2, delta.int,
+                               lambda.delta, p, common_codes, n.common, n.core){
   delta.int.1 <- delta.int[1:n1,]
   Y.1 <- S.1 - U.1 %*% t(V.1 - delta.int.1)
   delta.1.common <- matrix(0, n.common, p)

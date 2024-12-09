@@ -1,0 +1,125 @@
+---
+title: "CodeEff_Matrix Example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{CodeEff_Matrix Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+The `CodeEff_Matrix` function estimates code effects using left and right embeddings from source and target sites. This vignette demonstrates how to use this function with example data provided in the package.
+
+---
+
+## Load the Required Library
+
+Ensure the `MUGS` package is loaded before running the example:
+
+```{r setup}
+library(MUGS)
+```
+
+---
+
+## Load the Data
+
+Load the required datasets for the example:
+
+```{r load_data}
+# Load required data
+data(S.1)
+data(S.2)
+data(U.1)
+data(U.2)
+data(X.group.source)
+data(X.group.target)
+```
+
+---
+
+## Prepare Variables
+
+Prepare the variables required for the `CodeEff_Matrix` function:
+
+```{r prepare_variables}
+# Extract names and find common codes
+names.list.1 <- rownames(S.1)
+names.list.2 <- rownames(S.2)
+common_codes <- intersect(names.list.1, names.list.2)
+full.name.list <- c(names.list.1, names.list.2)
+
+# Create the initial estimator matrix
+zeta.int <- matrix(0, 4000, 10)  # Replace with appropriate dimensions
+rownames(zeta.int) <- full.name.list
+```
+
+---
+
+## Run the Function
+
+Run the `CodeEff_Matrix` function:
+
+```{r run_function}
+# Estimate code effects
+CodeEff_Matrix.out <- CodeEff_Matrix(
+  S.1 = S.1,
+  S.2 = S.2, 
+  n1 = 2000, 
+  n2 = 2000, 
+  U.1 = U.1, 
+  U.2 = U.2, 
+  V.1 = U.1, 
+  V.2 = U.2, 
+  common_codes = common_codes, 
+  zeta.int = zeta.int, 
+  lambda = 10, 
+  p = 10
+)
+```
+
+---
+
+## Examine the Output
+
+Explore the structure and key components of the output:
+
+```{r examine_output}
+# View structure of the output
+str(CodeEff_Matrix.out)
+
+# Print specific components of the result
+cat("\nEstimated Code Effects (zeta):\n")
+print(CodeEff_Matrix.out$zeta[1:5, 1:3])  # Show the first 5 rows and 3 columns of zeta
+
+cat("\nFrobenius Norm Difference (dif_F):\n")
+print(CodeEff_Matrix.out$dif_F)
+
+cat("\nUpdated Right Embeddings for Source Site (V.1.new):\n")
+print(CodeEff_Matrix.out$V.1.new[1:5, 1:3])  # Show first 5 rows and 3 columns of V.1.new
+
+cat("\nUpdated Right Embeddings for Target Site (V.2.new):\n")
+print(CodeEff_Matrix.out$V.2.new[1:5, 1:3])  # Show first 5 rows and 3 columns of V.2.new
+```
+
+---
+
+## Notes
+
+1. **Custom Parameters**: Modify parameters like `n1`, `n2`, `p`, and `lambda` to test different scenarios.
+2. **Data Preparation**: Ensure datasets (`S.1`, `S.2`, `U.1`, `U.2`, etc.) are correctly loaded and aligned.
+3. **Output**: Key components include the estimated zeta matrix, Frobenius norm difference, and updated embeddings.
+
+---
+
+## Summary
+
+This vignette demonstrated how to use the `CodeEff_Matrix` function for estimating code effects. Adjust input parameters and datasets to test different scenarios and interpret the output components for your analysis.

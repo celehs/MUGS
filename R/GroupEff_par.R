@@ -4,7 +4,6 @@
 #' @importFrom doSNOW registerDoSNOW
 #' @importFrom foreach %dopar% foreach
 #' @importFrom glmnet glmnet
-
 #'
 #' @param S.MGB SPPMI from the source site
 #' @param S.BCH SPPMI from the target site
@@ -25,31 +24,8 @@
 #'
 #' @return The output of estimating group effects parallelly
 #' @export
-#'
-#' @examples
-#' S1_data <- system.file("extdata", "S.1.Rdata", package = "MUGS")
-#' load(S1_data)
-#' S2_data <- system.file("extdata", "S.2.Rdata", package = "MUGS")
-#' load(S2_data)
-#' U1_data <- system.file("extdata", "U.1.Rdata", package = "MUGS")
-#' load(U1_data)
-#' U2_data <- system.file("extdata", "U.2.Rdata", package = "MUGS")
-#' load(U2_data)
-#' X_group_source_data <- system.file("extdata", "X.group.source.Rdata", package = "MUGS")
-#' load(X_group_source_data)
-#' X_group_target_data <- system.file("extdata", "X.group.target.Rdata", package = "MUGS")
-#' load(X_group_target_data)
-# 'names.list.1 <- rownames(S.1)
-# 'names.list.2 <- rownames(S.2)
-# 'full.name.list <- c(names.list.1, names.list.2)
-# 'beta.names.1 <- unique(c(colnames(X.group.source), colnames(X.group.target)))
-# 'beta.int <- matrix(0, 400, 10)
-# 'rownames(beta.int) <- beta.names.1
 
-# 'GroupEff_par.out <- GroupEff_par(S.MGB = S.1, S.BCH = S.2, n.MGB =2000, n.BCH=2000, U.MGB = U.1, U.BCH = U.2,
-# '                                 V.MGB = U.1, V.BCH = U.2, X.MGB.group = X.group.source, X.BCH.group = X.group.target,
-# '                                 n.group = 400, name.list = full.name.list, beta.int = beta.int,
-# '                                 lambda=0, p=10, n.core=2)
+
 
 GroupEff_par <- function(S.MGB, S.BCH, n.MGB, n.BCH, U.MGB, U.BCH, V.MGB, V.BCH, X.MGB.group, X.BCH.group, n.group, name.list, beta.int, lambda=0, p, n.core){
 

@@ -1,0 +1,15 @@
+── Building pkgdown site for package MUGS ──────────────────────────────────────
+Reading from: C:/Users/User1/Desktop/R_Package_For_Tianxi/MUGS
+Writing to: C:/Users/User1/Desktop/R_Package_For_Tianxi/MUGS/docs
+── Sitrep ──────────────────────────────────────────────────────────────────────
+✔ URLs ok.
+✔ Favicons ok.
+✔ Open graph metadata ok.
+✔ Articles metadata ok.
+✔ Reference metadata ok.
+── Initialising site ───────────────────────────────────────────────────────────
+── Building home ───────────────────────────────────────────────────────────────
+Reading README.md
+Writing `404.html`
+── Building function reference ─────────────────────────────────────────────────
+Reading man/CodeEff_Matrix.Rd

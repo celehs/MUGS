@@ -21,28 +21,6 @@
 #' @return The final result
 #' @export
 #'
-#' @examples
-#' S1_data <- system.file("extdata", "S.1.Rdata", package = "MUGS")
-#' load(S1_data)
-#' S2_data <- system.file("extdata", "S.2.Rdata", package = "MUGS")
-#' load(S2_data)
-#' pairs_rel_CV_data <- system.file("extdata", "pairs.rel.CV.Rdata", package = "MUGS")
-#' load(pairs_rel_CV_data)
-#' pairs_rel_EV_data <- system.file("extdata", "pairs.rel.EV.Rdata", package = "MUGS")
-#' load(pairs_rel_EV_data)
-#' X_group_source_data <- system.file("extdata", "X.group.source.Rdata", package = "MUGS")
-#' load(X_group_source_data)
-#' X_group_target_data <- system.file("extdata", "X.group.target.Rdata", package = "MUGS")
-#' load(X_group_target_data)
-#'
-# 'MUGS(TUNE = T, Eva = F, Lambda = c(10, 100), Lambda.delta = c(10000), n.core=4, tol=1, seed=1,
-# '     S.1 = S.1, S.2 = S.2, X.group.source = X.group.source, X.group.target=X.group.target,
-# '     pairs.rel.CV =  pairs.rel.CV, pairs.rel.EV =  pairs.rel.EV, p = 10, n.group = 400)
-
-# 'MUGS(TUNE = F, Eva = T, Lambda = 10, Lambda.delta = 10000, n.core=4, tol=1, seed=1,
-# '     S.1 = S.1, S.2 = S.2, X.group.source = X.group.source, X.group.target=X.group.target,
-# '     pairs.rel.CV =  pairs.rel.CV, pairs.rel.EV =  pairs.rel.EV, p = 10, n.group = 400)
-
 
 
 MUGS <- function(TUNE = F, Eva = T,
@@ -61,13 +39,6 @@ MUGS <- function(TUNE = F, Eva = T,
 
   # Load required packages
   lapply(required_packages, library, character.only = TRUE)
-
-  # Source additional functions
-  source('get_embed.R')
-  source('GroupEff_par.R')
-  source('CodeEff_Matrix.R')
-  source('CodeSiteEff_l2_par.R')
-  source('evaluation.sim.R')
 
   ################  Data Preperation ################
   # Ensure data is provided for non-simulated cases

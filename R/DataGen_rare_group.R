@@ -1,12 +1,12 @@
 #' Function used to generate input data (used only for Simulations)
 #' Generate SPPMIs, dummy matrices based on prior group structures, and code-code pairs for tuning and evaluation
 #'
-#' @importFrom Matrix bdiag
 #' @importFrom MASS mvrnorm
 #' @importFrom mvtnorm rmvnorm
 #' @importFrom utils combn
 #' @importFrom stats rnorm
 #' @importFrom fastDummies dummy_cols
+#' @importFrom methods signature
 #'
 #' @param seed for reproducibility
 #' @param p the length of an embedding
@@ -28,25 +28,6 @@
 #' @return Returns input data, SPPMIs, dummy matrices based on prior group structures and code-code pairs for tuning and evaluation
 #' @export
 #'
-#' @examples
-#' DataGen.out <- DataGen_rare_group(
-#'   seed = 1,
-#'   p = 100,
-#'   n1 = 2000,
-#'   n2 = 2000,
-#'   n.common = 1000,
-#'   n.group = 400,
-#'   sigma.eps.1 = 5,
-#'   sigma.eps.2 = 20,
-#'   sigma.rare = 80,
-#'   ratio.delta = 0.05,
-#'   network.k = 50,
-#'   rho.beta = 0.4,
-#'   rho.U0 = 0.4,
-#'   rho.delta = 0.95,
-#'   n.rare = 700,
-#'   group.size = 5
-#' )
 
 
 DataGen_rare_group <- function(seed, p, n1, n2, n.common, n.group, sigma.eps.1, sigma.eps.2, ratio.delta, network.k, rho.beta, rho.U0, rho.delta, sigma.rare, n.rare, group.size){
@@ -83,16 +64,16 @@ DataGen_rare_group <- function(seed, p, n1, n2, n.common, n.group, sigma.eps.1, 
     rho^exponent
   }
   M.beta.1 <- ar1_cor(3,rho.beta)
-  M.beta.2 <- bdiag(M.beta.1, diag(7))
-  Sigma.beta <- bdiag(replicate(40, M.beta.2 , simplify=FALSE))
+  M.beta.2 <- Matrix::bdiag(M.beta.1, diag(7))
+  Sigma.beta <- Matrix::bdiag(replicate(40, M.beta.2 , simplify=FALSE))
   beta <- mvrnorm(p, rep(0,n.group), Sigma.beta)
   beta <- t(beta)
   #### Code effect
   M.U0.1 <- ar1_cor(6,rho.U0)
-  Sigma.U0.1 <- bdiag(replicate(N/6, M.U0.1 , simplify=FALSE))
+  Sigma.U0.1 <- Matrix::bdiag(replicate(N/6, M.U0.1 , simplify=FALSE))
   M.U0.2 <- matrix(0.05, 6, 6)
   diag(M.U0.2) <- 0
-  Sigma.U0.2.temp <-  bdiag(replicate(300/6, M.U0.2 , simplify=FALSE))
+  Sigma.U0.2.temp <-  Matrix::bdiag(replicate(300/6, M.U0.2 , simplify=FALSE))
   Sigma.U0.2 <- matrix(0, N, N)
   Sigma.U0.2[501:800, 501:800] <- as.matrix(Sigma.U0.2.temp)
   Sigma.U0 <- Sigma.U0.1 + Sigma.U0.2
@@ -106,8 +87,8 @@ DataGen_rare_group <- function(seed, p, n1, n2, n.common, n.group, sigma.eps.1, 
   u0[group.only.codes,] =0
   #### code-site effect
   Sigma.delta.0 <- ar1_cor(network.k, rho.delta)
-  Sigma.delta.1 <- bdiag(replicate(n1*ratio.delta/network.k, Sigma.delta.0, simplify=FALSE))
-  Sigma.delta.2 <- bdiag(replicate(n2*ratio.delta/network.k, Sigma.delta.0, simplify=FALSE))
+  Sigma.delta.1 <- Matrix::bdiag(replicate(n1*ratio.delta/network.k, Sigma.delta.0, simplify=FALSE))
+  Sigma.delta.2 <- Matrix::bdiag(replicate(n2*ratio.delta/network.k, Sigma.delta.0, simplify=FALSE))
   delta1.temp <- mvrnorm(p, rep(0,n1*ratio.delta), Sigma.delta.1)
   delta2.temp <- mvrnorm(p, rep(0,n2*ratio.delta), Sigma.delta.2)
   set.seed(1)
@@ -121,7 +102,7 @@ DataGen_rare_group <- function(seed, p, n1, n2, n.common, n.group, sigma.eps.1, 
   ## similar pairs
   name.beta.full.1 <- matrix(501:2500, 400, 5)
   name.beta.full <-c(t(name.beta.full.1 ))
-  supp.cov.beta <- bdiag(replicate(40, bdiag(matrix(1, 3*5, 3*5), bdiag(replicate(7, matrix(1, 1*5, 1*5), simplify=FALSE))), simplify=FALSE))
+  supp.cov.beta <- Matrix::bdiag(replicate(40, Matrix::bdiag(matrix(1, 3*5, 3*5), Matrix::bdiag(replicate(7, matrix(1, 1*5, 1*5), simplify=FALSE))), simplify=FALSE))
   supp.cov.beta.full <- matrix(0, N, N)
   supp.cov.beta.full[name.beta.full, name.beta.full] <- as.matrix(supp.cov.beta)
   supp.cov.beta.full.upper <- supp.cov.beta.full

@@ -6,13 +6,7 @@
 #'
 #' @return The embedding from SVD
 #' @export
-#'
-#' @examples
-#' set.seed(1)
-#' S <- matrix(rnorm(100^2), 100, 100)
-#' library(rsvd)
-#' svd <- rsvd(S, 20)
-#' U <- get_embed(svd, d=10, normalize=TRUE)
+
 
 get_embed = function(mysvd, d=2000, normalize=TRUE){
   id = which(sign(mysvd$u[1,])==sign(mysvd$v[1,]))
@@ -24,4 +18,3 @@ get_embed = function(mysvd, d=2000, normalize=TRUE){
   rownames(embed) = mysvd$names
   return(embed)
 }
-

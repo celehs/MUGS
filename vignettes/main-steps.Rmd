@@ -1,0 +1,55 @@
+---
+title: "Multisource Graph Synthesis with EHR data"
+author: "Mengyan Li"
+date: "`Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{MUGS}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(MUGS)
+```
+
+Load data into R, including the SPPMI matrix from the two sites with row names and column names being the names of codes, i.e., S.1 and S.2. Also, load the dummy matrix for group structures at the two sites with row names being the code names and column names being the group names, i.e., X.group.source and X.group.target. Include the code-code pairs used for hyperparameters tuning, i.e., pairs.rel.CV. If you also want to perform evaluation of the code embeddings, please load the code-code pairs used for AUC calculation, i.e., pairs.rel.EV.
+
+```{r, eval=FALSE}
+load('S.1.Rdata')
+load('S.2.Rdata')
+load('X.group.source.Rdata')
+load('X.group.target.Rdata')
+load('pairs.rel.CV.Rdata')
+load('pairs.rel.EV.Rdata')
+```
+
+
+To tune the hyperparameters for code effects and code-site effects, set TUNE = TRUE and Eva = FALSE. The Lambda parameter should be a vector of positive values representing the tuning parameter for code effects. Similarly, Lambda.delta should be a vector of positive values for the tuning parameter for code-site effects. The n.core parameter specifies the number of cores to use for parallel computing, enhancing performance. The tol parameter sets the tolerance for convergence, determining when the algorithm should stop iterating. The seed parameter ensures reproducibility of results. The p parameter defines the dimension of the embedding vector, and n.group specifies the number of code groups.
+
+```{r, eval=FALSE}
+MUGS(TUNE = T, Eva = F, Lambda = c(10, 100), Lambda.delta = c(1000, 10000), n.core=4, tol=1, seed=1, 
+     S.1 = S.1, S.2 = S.2, X.group.source = X.group.source, X.group.target=X.group.target, 
+     pairs.rel.CV =  pairs.rel.CV, pairs.rel.EV =  pairs.rel.EV, p = 10, n.group = 400)
+```
+
+With optimal hyperparameters determined, set TUNE = FALSE to generate MUGS embeddings for code groups, as well as individual code embeddings at the two sites. This configuration will also produce cosine similarity matrices for the two sites and lists of homogeneous codes (codes similar across sites) and heterogeneous codes (codes different across sites). If you wish to evaluate the MUGS code embeddings further, using the pairs.rel.EV dataset for AUC calculation, set Eva = TRUE.
+
+```{r, eval=FALSE}
+MUGS(TUNE = F, Eva = T, Lambda = 10, Lambda.delta = 1000, n.core=4, tol=1, seed=1, 
+     S.1 = S.1, S.2 = S.2, X.group.source = X.group.source, X.group.target=X.group.target, 
+     pairs.rel.CV =  pairs.rel.CV, pairs.rel.EV =  pairs.rel.EV, p = 10, n.group = 400)
+```
+
+## References
+
+Li, M., Li, X., Pan, K., Geva, A., Yang, D., Sweet, S. M., Bonzel, C.-L., Panickan, V. A., Xiong, X., Mandl, K., & Cai, T. (2024). Multisource representation learning for pediatric knowledge extraction from electronic health records. npj Digital Medicine. https://doi.org/10.1038/s41746-024-01320-4
+
+

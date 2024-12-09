@@ -1,0 +1,121 @@
+---
+title: "CodeSiteEff_I2_par Example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{CodeSiteEff_I2_par Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+The `CodeSiteEff_I2_par` function estimates site-specific effects using input embeddings and penalization methods. This vignette demonstrates how to utilize the function with appropriate input data and parameters.
+
+---
+
+## Load the Required Library
+
+Ensure the `MUGS` package is loaded before running the example:
+
+```{r setup}
+library(MUGS)
+```
+
+---
+
+## Load the Data
+
+Load the required datasets for the example:
+
+```{r load_data}
+# Load required data
+data(S.1)
+data(S.2)
+data(X.group.source)
+data(X.group.target)
+data(U.1)
+data(U.2)
+```
+
+---
+
+## Prepare Variables
+
+Set up the variables required for the `CodeSiteEff_I2_par` function:
+
+```{r prepare_variables}
+# Extract names and find common codes
+names.list.1 <- rownames(S.1)
+names.list.2 <- rownames(S.2)
+common_codes <- intersect(names.list.1, names.list.2)
+full.name.list <- c(names.list.1, names.list.2)
+
+# Create the initial delta matrix
+delta.int <- matrix(0, 4000, 10)  # Adjust dimensions as needed
+rownames(delta.int) <- full.name.list
+```
+
+---
+
+## Run the Function
+
+Run the `CodeSiteEff_I2_par` function:
+
+```{r run_function}
+# Estimate site-specific effects
+CodeSiteEff_l2_par.out <- CodeSiteEff_l2_par(
+  S.1 = S.1, 
+  S.2 = S.2, 
+  n1 = 2000, 
+  n2 = 2000, 
+  U.1 = U.1, 
+  U.2 = U.2, 
+  V.1 = U.1, 
+  V.2 = U.2, 
+  delta.int = delta.int, 
+  lambda.delta = 1000, 
+  p = 10, 
+  common_codes = common_codes, 
+  n.common = 1000, 
+  n.core = 2
+)
+```
+
+---
+
+## Examine the Output
+
+Explore the structure and key components of the output:
+
+```{r examine_output}
+# View structure of the output
+str(CodeSiteEff_l2_par.out)
+
+# Print specific components of the result
+cat("\nEstimated Effects (Delta):\n")
+print(CodeSiteEff_l2_par.out$delta[1:5, 1:5])  # First 5 rows and columns of delta matrix
+
+cat("\nRegularization Path:\n")
+print(CodeSiteEff_l2_par.out$path)
+```
+
+---
+
+## Notes
+
+1. **Custom Parameters**: Modify parameters like `n1`, `n2`, `p`, and `lambda.delta` to test different scenarios.
+2. **Data Preparation**: Ensure datasets (`S.1`, `S.2`, `U.1`, `U.2`, etc.) are correctly loaded and aligned.
+3. **Output**: Key components include the estimated delta matrix and the regularization path.
+
+---
+
+## Summary
+
+This vignette demonstrated how to use the `CodeSiteEff_l2_par` function for estimating site-specific effects. Adjust input parameters and datasets to test different scenarios and interpret the output components for your analysis.

@@ -1,0 +1,90 @@
+---
+title: "DataGen_rare_group Example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{DataGen_rare_group Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+The `DataGen_rare_group` function generates synthetic data for rare group analysis, simulating structured datasets for testing and validating algorithms. This vignette demonstrates how to use `DataGen_rare_group` with example inputs.
+
+---
+
+## Load the Required Library
+
+Ensure the `MUGS` package is loaded before running the example:
+
+```{r setup}
+library(MUGS)
+```
+
+---
+
+## Generate Synthetic Data
+
+Run the `DataGen_rare_group` function to generate the synthetic dataset:
+
+```{r generate_data}
+# Generate data
+DataGen.out <- DataGen_rare_group(
+  seed = 1, 
+  p = 100, 
+  n1 = 2000, 
+  n2 = 2000, 
+  n.common = 1000, 
+  n.group = 400, 
+  sigma.eps.1 = 5, 
+  sigma.eps.2 = 20, 
+  sigma.rare = 80, 
+  ratio.delta = 0.05, 
+  network.k = 50, 
+  rho.beta = 0.4, 
+  rho.U0 = 0.4, 
+  rho.delta = 0.95,  
+  n.rare = 700, 
+  group.size = 5
+)
+```
+
+---
+
+## Examine the Output
+
+Explore the structure and key components of the generated dataset:
+
+```{r examine_output}
+# View structure of the output
+str(DataGen.out)
+
+# Print the first few rows and columns of the S.1 matrix
+cat("\nFirst 5 rows and columns of S.1:\n")
+print(DataGen.out$S.1[1:5, 1:5])
+
+# Print the first few rows and columns of the S.2 matrix
+cat("\nFirst 5 rows and columns of S.2:\n")
+print(DataGen.out$S.2[1:5, 1:5])
+```
+
+---
+
+## Notes
+
+1. **Custom Parameters**: Modify parameters like `p`, `n1`, `n2`, `n.group`, and others to test different scenarios.
+2. **Reproducibility**: The `seed` parameter ensures reproducibility of results.
+3. **Applications**: Use the generated data for testing rare group detection algorithms or performance benchmarking.
+
+---
+
+## Summary
+
+This vignette demonstrated how to use the `DataGen_rare_group` function to simulate structured data for rare group analysis. Adjust input parameters to suit specific use cases or experimental setups. For further details, refer to the package documentation.

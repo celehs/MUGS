@@ -1,3 +1,10 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
+^doc$
+^Meta$
+^docs$
+^_pkgdown\.yml$
+^pkgdown$
+^build_stderr\.txt$
+^build_stdout\.txt$
