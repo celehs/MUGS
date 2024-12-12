@@ -1,0 +1,78 @@
+---
+title: "Evaluation Simulation Usage"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Evaluation Simulation Usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+The `evaluation_sim` function is used to evaluate the performance of group effect estimation algorithms under simulated conditions. This vignette demonstrates how to use the `evaluation_sim` function with example data provided in the package.
+
+---
+
+## Load the Required Library
+
+Ensure the `MUGS` package is loaded before running the example:
+
+```{r setup}
+library(MUGS)
+```
+
+---
+
+## Load Example Data
+
+Load the example data required for the `evaluation_sim` function:
+
+```{r load_data}
+data(pairs.rel.EV)
+data(U.2)
+```
+---
+
+## Run the Evaluation Simulation
+
+Run the `evaluation_sim` function to evaluate the performance based on the provided data:
+
+```{r run_simulation}
+# Evaluate simulation
+evaluation_results <- evaluation.sim(pairs.rel.EV, U.2)
+```
+
+---
+
+## Examine the Output
+
+Explore the structure and key components of the output:
+
+```{r examine_output}
+# View the structure of the output
+str(evaluation_results)
+
+# Display first few rows of the results
+cat("\nEvaluation Results (first 5 rows):\n")
+print(head(evaluation_results, 5))
+```
+
+---
+
+## Notes
+
+1. **Input Data**: Ensure that `pairs.rel.EV` and `U.2` are properly formatted and loaded before running the function.
+2. **Output Structure**: The output typically includes evaluation metrics and processed results for further analysis.
+
+---
+
+## Summary
+
+This vignette demonstrated the use of the `evaluation_sim` function for evaluating group effect estimation. Customize the input data and analyze the output to assess the performance of your algorithms.

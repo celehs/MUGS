@@ -46,6 +46,10 @@ CodeEff_Matrix(
 }
 \value{
 A list with the following elements:
+\item{zeta}{The estimated code effects.}
+\item{dif_F}{The Frobenius norm difference between the updated and initial estimators.}
+\item{V.1.new}{Updated right embeddings for the source site.}
+\item{V.2.new}{Updated right embeddings for the target site.}
 }
 \description{
 This function estimates code effects using left and right embeddings from source and target sites.

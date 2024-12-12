@@ -1,10 +1,8 @@
 ---
 title: "Multisource Graph Synthesis with EHR data"
-author: "Mengyan Li"
-date: "`Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{MUGS}
+  %\VignetteIndexEntry{Multisource Graph Synthesis with EHR data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -23,12 +21,12 @@ library(MUGS)
 Load data into R, including the SPPMI matrix from the two sites with row names and column names being the names of codes, i.e., S.1 and S.2. Also, load the dummy matrix for group structures at the two sites with row names being the code names and column names being the group names, i.e., X.group.source and X.group.target. Include the code-code pairs used for hyperparameters tuning, i.e., pairs.rel.CV. If you also want to perform evaluation of the code embeddings, please load the code-code pairs used for AUC calculation, i.e., pairs.rel.EV.
 
 ```{r, eval=FALSE}
-load('S.1.Rdata')
-load('S.2.Rdata')
-load('X.group.source.Rdata')
-load('X.group.target.Rdata')
-load('pairs.rel.CV.Rdata')
-load('pairs.rel.EV.Rdata')
+data(S.1)
+data(S.2)
+data(X.group.source)
+data(X.group.target)
+data(pairs.rel.CV)
+data(pairs.rel.EV)
 ```
 
 

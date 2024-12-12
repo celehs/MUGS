@@ -26,9 +26,7 @@
 #' @export
 
 
-
 GroupEff_par <- function(S.MGB, S.BCH, n.MGB, n.BCH, U.MGB, U.BCH, V.MGB, V.BCH, X.MGB.group, X.BCH.group, n.group, name.list, beta.int, lambda=0, p, n.core){
-
   required_packages <- c("parallel", "doSNOW", "Matrix")
 
   # Check for missing packages and stop if any are not installed

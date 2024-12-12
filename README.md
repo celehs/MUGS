@@ -77,7 +77,7 @@ Install development version from GitHub:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("Xuanmengcai/MUGS")
+remotes::install_github("celehs/MUGS")
 ```
 
 ## Getting Started

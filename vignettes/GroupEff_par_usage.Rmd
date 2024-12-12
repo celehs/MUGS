@@ -1,0 +1,123 @@
+---
+title: "GroupEff_par Usage"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{GroupEff_par Usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+## Introduction
+
+The `GroupEff_par` function estimates group effects using embeddings and structured input data. This vignette demonstrates the usage of the `GroupEff_par` function with example data included in the package.
+
+---
+
+## Load the Required Library
+
+Ensure the `MUGS` package is loaded before running the example:
+
+```{r setup}
+library(MUGS)
+```
+
+---
+
+## Load the Data
+
+Load the required datasets for the example:
+
+```{r load_data}
+# Load required data
+data(S.1)
+data(S.2)
+data(X.group.source)
+data(X.group.target)
+data(U.1)
+data(U.2)
+```
+
+---
+
+## Prepare Variables
+
+Prepare the variables required for the `GroupEff_par` function:
+
+```{r prepare_variables}
+# Extract names and create name lists
+names.list.1 <- rownames(S.1)
+names.list.2 <- rownames(S.2)
+full.name.list <- c(names.list.1, names.list.2)
+
+# Initialize beta matrix
+beta.names.1 <- unique(c(colnames(X.group.source), colnames(X.group.target)))
+beta.int <- matrix(0, 400, 10)  # Replace with appropriate dimensions
+rownames(beta.int) <- beta.names.1
+```
+
+---
+
+## Run the Function
+
+Run the `GroupEff_par` function:
+
+```{r run_function, eval=FALSE}
+  GroupEff_par.out <- GroupEff_par(
+    S.MGB = S.1, 
+    S.BCH = S.2, 
+    n.MGB = 2000, 
+    n.BCH = 2000, 
+    U.MGB = U.1, 
+    U.BCH = U.2, 
+    V.MGB = U.1, 
+    V.BCH = U.2, 
+    X.MGB.group = X.group.source, 
+    X.BCH.group = X.group.target,
+    n.group = 400, 
+    name.list = full.name.list, 
+    beta.int = beta.int, 
+    lambda = 0, 
+    p = 10, 
+    n.core = 2
+  )
+```
+
+---
+
+## Examine the Output
+
+Explore the structure and key components of the output:
+
+```{r examine_output}
+# View structure of the output
+str(GroupEff_par.out)
+
+# Print specific components of the result
+cat("\nEstimated Group Effects:\n")
+print(GroupEff_par.out$effects[1:5, 1:3])  # Show the first 5 rows and 3 columns of effects
+
+cat("\nRegularization Path:\n")
+print(GroupEff_par.out$path)
+```
+
+---
+
+## Notes
+
+1. **Custom Parameters**: Modify parameters like `n.MGB`, `n.BCH`, `p`, and `lambda` to test different scenarios.
+2. **Data Preparation**: Ensure datasets (`S.1`, `S.2`, `U.1`, `U.2`, etc.) are correctly loaded and aligned.
+3. **Output**: Key components include the estimated group effects matrix and regularization path.
+
+---
+
+## Summary
+
+This vignette demonstrated how to use the `GroupEff_par` function for estimating group effects. Adjust input parameters and datasets to test different scenarios and interpret the output components for your analysis.

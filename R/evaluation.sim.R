@@ -9,7 +9,7 @@
 #'
 #' @return The output of tuning and evaluation
 #' @export
-#'
+
 
 evaluation.sim <- function(pairs.rel, U){
   required_packages <- c("dplyr", "pROC")

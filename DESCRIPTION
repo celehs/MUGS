@@ -2,12 +2,14 @@ Package: MUGS
 Type: Package
 Title: Multisource Graph Synthesis with EHR data
 Version: 0.1.0
-Author: Steven Cai <1xuanmnengcai@gmail.com>
-        Mengyan Li <mengyanli@bentley.edu>
-        Tianxi Cai <tcai@hsph.harvard.edu>
-Maintainer: Steven Cai <1xuanmnengcai@gmail.com>
-            Mengyan Li <mengyanli@bentley.edu>
-            Tianxi Cai <tcai@hsph.harvard.edu>
+Author:  person("Mengyan", "Li", email = "mengyanli@bentley.edu", role = c('cre', 'aut')),
+         person('Xiaoou', 'Li', role = c('aut')),
+         person('Tianxi', 'cai', role = c('aut')),
+         person("PARSE LTD", email = "software@parse-health.org", role = c('cre', 'aut')),
+         person('CELEHS', role = c('aut'))
+Maintainer: person("Mengyan", "Li", email = "mengyanli@bentley.edu", role = c('cre', 'aut')),
+            person("PARSE LTD", email = "software@parse-health.org", role = c('cre', 'aut'))
+
 Description: We develop MUlti-source Graph Synthesis (MUGS), an algorithm designed to create 
     embeddings for pediatric EHR codes by leveraging graphical information from three distinct sources：
     (1) pediatric EHR data, (2) EHR data from the general patient population, and 
