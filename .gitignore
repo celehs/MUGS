@@ -1,12 +1,4 @@
 .Rproj.user
-.Rhistory
-.RData
-.Ruserdata
-inst/doc
-/doc/
-/Meta/
-docs
+.gitignore
 .Rdata
-.httr-oauth
-.DS_Store
-.quarto
+.Rhistory

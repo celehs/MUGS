@@ -1,0 +1,16 @@
+pandoc: 3.1.11
+pkgdown: 2.1.1
+pkgdown_sha: ~
+articles:
+  CodeEff_Matrix_usage: CodeEff_Matrix_usage.html
+  CodeSiteEff_I2_par_usage: CodeSiteEff_I2_par_usage.html
+  DataGen_rare_group_usage: DataGen_rare_group_usage.html
+  Evaluation_sim_usage: Evaluation_sim_usage.html
+  examples: examples.html
+  get_embed_usage: get_embed_usage.html
+  GroupEff_par_usage: GroupEff_par_usage.html
+  main-steps: main-steps.html
+last_built: 2024-12-11T03:36Z
+urls:
+  reference: https://github.com/celehs/MUGS/reference
+  article: https://github.com/celehs/MUGS/articles
