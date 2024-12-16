@@ -30,8 +30,19 @@
 #'
 
 
-CodeSiteEff_l2_par <- function(S.1, S.2, n1, n2, U.1, U.2, V.1, V.2, delta.int,
-                               lambda.delta, p, common_codes, n.common, n.core){
+CodeSiteEff_l2_par <- function(S.1, S.2, n1, n2, U.1, U.2, V.1, V.2, delta.int, lambda.delta, p, common_codes, n.common, n.core){
+
+  required_packages <- c("parallel", "doSNOW")
+
+  # Check for missing packages and stop if any are not installed
+  missing_packages <- required_packages[!sapply(required_packages, requireNamespace, quietly = TRUE)]
+  if (length(missing_packages) > 0) {
+    stop("Missing packages need to be installed: ", paste(missing_packages, collapse = ", "), call. = FALSE)
+  }
+
+  # Load required packages
+  lapply(required_packages, library, character.only = TRUE)
+
   delta.int.1 <- delta.int[1:n1,]
   Y.1 <- S.1 - U.1 %*% t(V.1 - delta.int.1)
   delta.1.common <- matrix(0, n.common, p)

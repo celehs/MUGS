@@ -12,6 +12,7 @@
 
 
 evaluation.sim <- function(pairs.rel, U){
+
   required_packages <- c("dplyr", "pROC")
 
   # Check for missing packages and stop if any are not installed
