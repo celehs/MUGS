@@ -1,8 +1,8 @@
 ---
-title: "DataGen_rare_group Example"
+title: "DataGen_rare_group_usage"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{DataGen_rare_group Example}
+  %\VignetteIndexEntry{DataGen_rare_group_usage}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

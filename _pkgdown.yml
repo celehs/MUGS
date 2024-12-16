@@ -1,4 +1,28 @@
-url: https://github.com/celehs/MUGS
+name: "MUGS"
+url: "https://celehs.github.io/MUGS"
+
+navbar:
+  title: "MUGS"
+  type: default
+  left:
+    - text: "Preference"
+      href: reference/index.html
+    - text: "Function Usage"
+      menu:
+        - text: "CodeEff_Matrix"
+          href: articles/CodeEff_Matrix_usage.html
+        - text: "CodeSiteEff_I2_par"
+          href: articles/CodeSiteEff_I2_par_usage.html
+        - text: "DataGen_rare_group"
+          href: articles/DataGen_rare_group_usage.html
+        - text: "Evaluation_sim"
+          href: articles/Evaluation_sim_usage.html
+        - text: "get_embed"
+          href: articles/get_embed_usage.html
+        - text: "GroupEff_par"
+          href: articles/GroupEff_par_usage.html
+    - text: "Main Steps"
+      href: articles/main-steps.html
+
 template:
   bootstrap: 5
-

@@ -2,3 +2,4 @@
 .gitignore
 .Rdata
 .Rhistory
+inst/doc
