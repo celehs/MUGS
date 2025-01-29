@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 # Multisource Graph Synthesis with EHR data
 
-[![CRAN](https://www.r-pkg.org/badges/version/PheCAP)](https://CRAN.R-project.org/package=PheCAP) ----- This needs to be changed once we have the links
+[![CRAN](https://www.r-pkg.org/badges/version/PheCAP)](https://CRAN.R-project.org/package=PheCAP) ----- This needs to be changed once we have the link
 
 ## Overview
 
