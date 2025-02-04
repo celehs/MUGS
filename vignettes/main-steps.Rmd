@@ -21,6 +21,33 @@ library(MUGS)
 Load data into R, including the SPPMI matrix from the two sites with row names and column names being the names of codes, i.e., S.1 and S.2. Also, load the dummy matrix for group structures at the two sites with row names being the code names and column names being the group names, i.e., X.group.source and X.group.target. Include the code-code pairs used for hyperparameters tuning, i.e., pairs.rel.CV. If you also want to perform evaluation of the code embeddings, please load the code-code pairs used for AUC calculation, i.e., pairs.rel.EV.
 
 ```{r, eval=FALSE}
+# Download and load a dataset
+pairs.rel.CV <- load_pairs_rel_CV()
+head(pairs.rel.CV)
+
+pairs.rel.EV <- load_pairs_rel_EV()
+head(pairs.rel.CV)
+
+S_1 <- load_S_1()
+head(S_1)
+
+S.2 <- load_S_1()
+head(S.2)
+
+U.1 <- load_S_1()
+head(U.1)
+
+U.2 <- load_S_1()
+head(U.2)
+
+X.group.source <- load_X_group_source()
+head(X.group.source)
+
+X.group.target <- load_X_group_target()
+head(X.group.target)
+```
+
+```{r, eval=FALSE}
 data(S.1)
 data(S.2)
 data(X.group.source)

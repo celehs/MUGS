@@ -15,50 +15,93 @@ knitr::opts_chunk$set(
 
 # Multisource Graph Synthesis with EHR data
 
-[![CRAN](https://www.r-pkg.org/badges/version/PheCAP)](https://CRAN.R-project.org/package=PheCAP) ----- This needs to be changed once we have the link
+[![CRAN](https://www.r-pkg.org/badges/version/PheCAP)](https://CRAN.R-project.org/package=PheCAP)
+(This badge is a placeholder; update it once MUGS is on CRAN.)
 
 ## Overview
 
-# MUGS
-We develop MUlti-source Graph Synthesis (MUGS), an algorithm designed to create embeddings for pediatric EHR codes by leveraging graphical information from three distinct sources: (1) pediatric EHR data, (2) EHR data from the general patient population, and (3) existing hierarchical medical ontology knowledge shared across different patient populations. 
+## MUGS
 
-Utilizing existing hierarchical medical ontology as prior general knowledge, MUGS facilitates efficient transfer learning by grouping similar codes, thereby enhancing the transferability of knowledge from general to pediatric systems. To address the heterogeneity within code groups and between sites, we propose to decompose a code embedding into three components: the group effect, defined based on the hierarchical medical ontology; the site-nonspecific code effect, capturing characteristics of a code that differ from its group effect and are shared between health systems; and the code-site effect, identifying site-specific traits of a code. Importantly, this decomposition, coupled with penalty functions applied to the code and code-site effects, provides adaptability to varying degrees of heterogeneity within code groups and between sites and protects against the adverse effects of negative knowledge transfer via hyperparameter tuning.
+We develop **MUlti-source Graph Synthesis (MUGS)**, an algorithm designed to create embeddings for pediatric EHR codes by leveraging graphical information from three distinct sources:
+
+1. Pediatric EHR data
+2. EHR data from the general patient population
+3. Existing hierarchical medical ontology knowledge shared across different patient populations (e.g., PheCode, LOINC, RxNorm)
+
+Utilizing existing hierarchical medical ontology as prior general knowledge, MUGS facilitates efficient transfer learning by grouping similar codes, thereby enhancing the transferability of knowledge from general to pediatric systems. To address the heterogeneity within code groups and between sites, we propose to decompose a code embedding into three components:
+
+- **Group effect**: defined based on the hierarchical medical ontology.
+- **Site-nonspecific code effect**: shared characteristics of a code that differ from its group effect.
+- **Code-site effect**: site-specific characteristics of a code.
+
+This decomposition, coupled with penalty functions applied to the code and code-site effects, allows adaptability to varying degrees of heterogeneity within code groups and between sites, and protects against negative knowledge transfer through hyperparameter tuning.
 
 ![Flowchart](man/figures/MUGSFlowchart.png)
 
-First, we obtain the two sets of initial embeddings at each site by using 'get_embed' function, then align them by solving the orthogonal procrustes problem. 
-Second, we utilize the existing hierarchical medical ontology of PheCodes, LOINC codes, and RxNorms to group similar codes (https://shiny.parse-health.org/hierarchies/), and train initial embeddings for group effects, code effects, and code-site effects by pooling the two sets of aligned embeddings. 
-Third, we commence our core algorithm: updating group effects, code effects, and code-site effects in an alternating and iterative fashion. 'GroupEff_par' and 'CodeSiteEff_l2_par' are used to update group effects and code-site effects, respectively, utilizing parallel computations across multiple cores or machines to enhance speed. 'CodeEff_Matrix' is used to update code effects via matrix computations.
+1. **Initial Embeddings**: Obtain two sets of initial embeddings (one per site) using the `get_embed()` function, then align them via an orthogonal Procrustes solution.
+2. **Ontology-based Grouping**: Use existing hierarchical ontologies (e.g., [PheCodes, LOINC, RxNorms](https://shiny.parse-health.org/hierarchies/)) to group codes. Pool the aligned embeddings to initialize group, code, and code-site effects.
+3. **Iterative Updates**: Update group effects, code effects, and code-site effects in an alternating fashion using `GroupEff_par`, `CodeSiteEff_l2_par`, and `CodeEff_Matrix`.
 
-For hyperparameter tuning, we leverage code-code pairs curated from related literature. This helps us select the optimal tuning parameters associated with the penalties on code effects and code-site effects without the need for data splitting. The performance of different sets of embeddings with different tuning parameters is evaluated using 'evaluation.sim'. It is designed to assess the accuracy of the embeddings in identifying established related pairs versus random pairs across a wide range of settings.
+For hyperparameter tuning, we leverage known code-code pairs curated from the literature to select the optimal penalties on code effects and code-site effects, all evaluated with `evaluation.sim`. This helps distinguish established related code pairs from random pairs across a wide range of scenarios.
 
-Although we cannot share the real data from MGB and BCH used to generate our MUGS embeddings, we have developed a Shiny App (https://shiny.parse-health.org/multi-view-net/) to support downstream tasks such as pediatric feature engineering, the construction of pediatric knowledge graphs, and more.
+While real data from MGB and BCH cannot be shared, we offer a [Shiny App](https://shiny.parse-health.org/multi-view-net/) for exploring MUGS embeddings in downstream tasks such as pediatric feature engineering and knowledge graph construction.
 
-
+---
 
 ## Installation
 
-Install stable version from CRAN:
+Install the stable version from CRAN (once available):
 
 ```{r, eval=FALSE}
 install.packages("MUGS")
-```
 
-Install development version from GitHub:
-
-```{r, eval=FALSE}
-# install.packages("remotes")
-remotes::install_github("celehs/MUGS")
 ```
 
 ## Getting Started
 
-Load in the simulated data (...) and try the R codes from the vignette [MUGS.Rmd] (...).
+Load the simulated data (if provided) and review the example code in the `vignettes/MUGS.Rmd`. 
 
-To use real EHR data, first convert the data into the same format as the simulated data. Detailed guidelines for data formatting are included in MUGS.Rmd. Once formatted, call the main function 'MUGS' with your data as input.
+For real EHR data:
+1. Convert your data into the same format as the simulated data.
+2. Call the main function `MUGS()` with your formatted data as input.
+
+Here is a simplified illustration of the workflow (not actual production code):
+
+```{r, eval=FALSE}
+library(MUGS)
+## Step 1: Get initial embeddings
+embeddings_site1 <- get_embed(data_site1, method = "someMethod")
+embeddings_site2 <- get_embed(data_site2, method = "someMethod")
+## Step 2: Align them (Orthogonal Procrustes)
+aligned <- align(embeddings_site1, embeddings_site2)
+site1_aligned <- aligned$aligned1
+site2_aligned <- aligned$aligned2
+#Step 3: Use an existing ontology to group codes
+group_info <- create_groups_from_ontology("hierarchy_file")
+## Initialize group/code/code-site effects
+groupEff_init <- init_group_effect(group_info, list(site1_aligned, site2_aligned))
+codeEff_init <- init_code_effect(list(site1_aligned, site2_aligned))
+siteEff_init <- init_code_site_effect(list(site1_aligned, site2_aligned))
+## Iterative updates
+for (iter in 1:max_iter) {
+groupEff_init <- GroupEff_par(groupEff_init, codeEff_init, siteEff_init, ...)
+siteEff_init <- CodeSiteEff_l2_par(groupEff_init, codeEff_init, siteEff_init, ...)
+codeEff_init <- CodeEff_Matrix(groupEff_init, codeEff_init, siteEff_init, ...)
+}
+## Step 4: Hyperparameter tuning using known code-code pairs
+known_pairs <- data.frame(code1 = c("A"), code2 = c("B"))
+performance <- evaluation.sim(codeEff_init, known_pairs)
+```
 
 
-## Citations
+## Citation
 
-Li, M., Li, X., Pan, K., Geva, A., Yang, D., Sweet, S. M., Bonzel, C.-L., Panickan, V. A., Xiong, X., Mandl, K., & Cai, T. (2024). Multisource representation learning for pediatric knowledge extraction from electronic health records. npj Digital Medicine. https://doi.org/10.1038/s41746-024-01320-4
+If you use **MUGS** in your research, please cite:
 
+Li, M., Li, X., Pan, K., Geva, A., Yang, D., Sweet, S. M., Bonzel, C.-L., Panickan, V. A., Xiong, X., Mandl, K., & Cai, T. (2024).  
+**Multisource representation learning for pediatric knowledge extraction from electronic health records.**  
+*npj Digital Medicine*. [https://doi.org/10.1038/s41746-024-01320-4](https://doi.org/10.1038/s41746-024-01320-4)
+
+---
+
+**Thank you for using MUGS!** For issues or feature requests, please open an issue at [https://github.com/celehs/MUGS](https://github.com/celehs/MUGS).
