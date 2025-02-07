@@ -2,7 +2,4 @@
 .gitignore
 .Rdata
 .Rhistory
-inst/doc
-/doc/
-/Meta/
 *.tar.gz
