@@ -1,6 +1,8 @@
 ---
 title: "get_embed_usage"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    output_dir: "C:/MUGS/MUGS/doc"
 vignette: >
   %\VignetteIndexEntry{get_embed_usage}
   %\VignetteEngine{knitr::rmarkdown}

@@ -3,3 +3,5 @@
 .Rdata
 .Rhistory
 inst/doc
+/doc/
+/Meta/

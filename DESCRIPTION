@@ -1,6 +1,6 @@
 Package: MUGS
 Type: Package
-Title: Multisource Graph Synthesis with EHR data
+Title: Multisource Graph Synthesis with EHR Data
 Version: 0.1.0
 Authors@R: c(
     person(given = "Mengyan", family = "Li", email = "mengyanli@bentley.edu", role = c("cre", "aut")),
@@ -18,8 +18,7 @@ Encoding: UTF-8
 LazyData: true
 LazyDataCompression: xz
 RoxygenNote: 7.3.2
-URL: https://github.com/celehs/MUGS, https://celehs.github.io/MUGS/
-DOI: 10.5281/zenodo.14776064
+URL: https://github.com/celehs/MUGS, https://doi.org/10.1038/s41746-024-01320-4
 Suggests: 
     knitr,
     rmarkdown,

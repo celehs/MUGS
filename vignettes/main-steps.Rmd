@@ -1,14 +1,17 @@
 ---
-title: "Multisource Graph Synthesis with EHR data"
-output: rmarkdown::html_vignette
+title: "Multisource Graph Synthesis with EHR Data"
+output:
+  rmarkdown::html_vignette:
+    output_dir: "C:/MUGS/MUGS/doc"
 vignette: >
-  %\VignetteIndexEntry{Multisource Graph Synthesis with EHR data}
+  %\VignetteIndexEntry{Multisource Graph Synthesis with EHR Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
+  eval = FALSE,
   collapse = TRUE,
   comment = "#>"
 )

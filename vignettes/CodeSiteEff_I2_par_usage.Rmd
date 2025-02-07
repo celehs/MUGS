@@ -1,6 +1,8 @@
 ---
 title: "CodeSiteEff_I2_par_usage"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    output_dir: "C:/MUGS/MUGS/doc"
 vignette: >
   %\VignetteIndexEntry{CodeSiteEff_I2_par_usage}
   %\VignetteEngine{knitr::rmarkdown}

@@ -7,3 +7,5 @@
 ^pkgdown$
 ^build_stderr\.txt$
 ^build_stdout\.txt$
+^data$
+^inst$

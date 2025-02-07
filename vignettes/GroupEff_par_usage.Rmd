@@ -1,6 +1,8 @@
 ---
 title: "GroupEff_par_usage"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    output_dir: "C:/MUGS/MUGS/doc"
 vignette: >
   %\VignetteIndexEntry{GroupEff_par_usage}
   %\VignetteEngine{knitr::rmarkdown}

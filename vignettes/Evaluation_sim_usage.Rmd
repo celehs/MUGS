@@ -1,6 +1,8 @@
 ---
 title: "Evaluation_sim_usage"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    output_dir: "C:/MUGS/MUGS/doc"
 vignette: >
   %\VignetteIndexEntry{Evaluation_sim_usage}
   %\VignetteEngine{knitr::rmarkdown}
