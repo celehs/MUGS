@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="CodeEff_Matrix_usage">
 </head>
 <body>
@@ -167,49 +167,41 @@ function:</p>
 <span><span class="co">#&gt;  $ V.2.new: num [1:2000, 1:10] 11.75 14.11 -4.92 -10.88 -13.9 ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:2000] "code:1001" "code:1002" "code:1003" "code:1004" ...</span></span>
-<span><span class="co">#&gt;   .. ..$ : NULL</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt;   .. ..$ : NULL</span></span>
+<span></span>
 <span><span class="co"># Print specific components of the result</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"\nEstimated Code Effects (zeta):\n"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Estimated Code Effects (zeta):</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">CodeEff_Matrix.out</span><span class="op">$</span><span class="va">zeta</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>  <span class="co"># Show the first 5 rows and 3 columns of zeta</span></span>
+<span><span class="co">#&gt; Estimated Code Effects (zeta):</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">CodeEff_Matrix.out</span><span class="op">$</span><span class="va">zeta</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>  <span class="co"># Show the first 5 rows and 3 columns of zeta</span></span>
 <span><span class="co">#&gt;              [,1]        [,2]       [,3]</span></span>
 <span><span class="co">#&gt; code:1 -7.2282856  2.68057655  4.0679679</span></span>
 <span><span class="co">#&gt; code:2  2.6868370 -2.77701996 -0.2714358</span></span>
 <span><span class="co">#&gt; code:3 -2.7235616 -4.34907679 -3.6425147</span></span>
 <span><span class="co">#&gt; code:4 -0.7883573 -0.08617556  2.2048065</span></span>
-<span><span class="co">#&gt; code:5  3.5932316  2.32022527  1.4901541</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; code:5  3.5932316  2.32022527  1.4901541</span></span>
+<span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"\nFrobenius Norm Difference (dif_F):\n"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Frobenius Norm Difference (dif_F):</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">CodeEff_Matrix.out</span><span class="op">$</span><span class="va">dif_F</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 50.0446</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; Frobenius Norm Difference (dif_F):</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">CodeEff_Matrix.out</span><span class="op">$</span><span class="va">dif_F</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 50.0446</span></span>
+<span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"\nUpdated Right Embeddings for Source Site (V.1.new):\n"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Updated Right Embeddings for Source Site (V.1.new):</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">CodeEff_Matrix.out</span><span class="op">$</span><span class="va">V.1.new</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>  <span class="co"># Show first 5 rows and 3 columns of V.1.new</span></span>
+<span><span class="co">#&gt; Updated Right Embeddings for Source Site (V.1.new):</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">CodeEff_Matrix.out</span><span class="op">$</span><span class="va">V.1.new</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>  <span class="co"># Show first 5 rows and 3 columns of V.1.new</span></span>
 <span><span class="co">#&gt;              [,1]        [,2]       [,3]</span></span>
 <span><span class="co">#&gt; code:1 -7.5694752  2.84253618  4.2534926</span></span>
 <span><span class="co">#&gt; code:2  2.8307836 -2.90516355 -0.3131111</span></span>
 <span><span class="co">#&gt; code:3 -2.8177723 -4.55248003 -3.8320463</span></span>
 <span><span class="co">#&gt; code:4 -0.8139894 -0.07198545  2.3002889</span></span>
-<span><span class="co">#&gt; code:5  3.7769594  2.44711826  1.5804564</span></span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; code:5  3.7769594  2.44711826  1.5804564</span></span>
+<span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"\nUpdated Right Embeddings for Target Site (V.2.new):\n"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Updated Right Embeddings for Target Site (V.2.new):</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">CodeEff_Matrix.out</span><span class="op">$</span><span class="va">V.2.new</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>  <span class="co"># Show first 5 rows and 3 columns of V.2.new</span></span>
+<span><span class="co">#&gt; Updated Right Embeddings for Target Site (V.2.new):</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">CodeEff_Matrix.out</span><span class="op">$</span><span class="va">V.2.new</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>  <span class="co"># Show first 5 rows and 3 columns of V.2.new</span></span>
 <span><span class="co">#&gt;                 [,1]       [,2]      [,3]</span></span>
 <span><span class="co">#&gt; code:1001  11.749029 -11.572740  1.768665</span></span>
 <span><span class="co">#&gt; code:1002  14.112210 -11.036948  3.941473</span></span>

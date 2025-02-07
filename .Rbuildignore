@@ -1,7 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
-^doc$
 ^Meta$
 ^_pkgdown\.yml$
 ^pkgdown$
@@ -9,3 +8,8 @@
 ^build_stdout\.txt$
 ^data$
 ^inst$
+^\.git
+^\.gitignore
+^\.github
+^docs$
+

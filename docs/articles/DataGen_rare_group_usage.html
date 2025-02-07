@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="DataGen_rare_group_usage">
 </head>
 <body>
@@ -120,7 +120,7 @@ synthetic dataset:</p>
 <span>  group.size <span class="op">=</span> <span class="fl">5</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: package 'MASS' was built under R version 4.4.1</span></span>
-<span><span class="co">#&gt; Warning: package 'fastDummies' was built under R version 4.4.1</span></span>
+<span><span class="co">#&gt; Warning: package 'fastDummies' was built under R version 4.4.2</span></span>
 <span><span class="co">#&gt; Warning: package 'rsvd' was built under R version 4.4.1</span></span>
 <span><span class="co">#&gt; Warning: package 'Rcpp' was built under R version 4.4.2</span></span>
 <span><span class="co">#&gt; Warning: package 'inline' was built under R version 4.4.2</span></span>
@@ -159,11 +159,11 @@ synthetic dataset:</p>
 <span><span class="co">#&gt;   19 : </span></span>
 <span><span class="co">#&gt;   20 : // declarations</span></span>
 <span><span class="co">#&gt;   21 : extern "C" {</span></span>
-<span><span class="co">#&gt;   22 : SEXP file40c4483c7ce( SEXP n_, SEXP mu_, SEXP sigma_) ;</span></span>
+<span><span class="co">#&gt;   22 : SEXP file5af85c8a5c73( SEXP n_, SEXP mu_, SEXP sigma_) ;</span></span>
 <span><span class="co">#&gt;   23 : }</span></span>
 <span><span class="co">#&gt;   24 : </span></span>
 <span><span class="co">#&gt;   25 : // definition</span></span>
-<span><span class="co">#&gt;   26 : SEXP file40c4483c7ce(SEXP n_, SEXP mu_, SEXP sigma_) {</span></span>
+<span><span class="co">#&gt;   26 : SEXP file5af85c8a5c73(SEXP n_, SEXP mu_, SEXP sigma_) {</span></span>
 <span><span class="co">#&gt;   27 : BEGIN_RCPP</span></span>
 <span><span class="co">#&gt;   28 : </span></span>
 <span><span class="co">#&gt;   29 :   using namespace Rcpp;</span></span>
@@ -216,29 +216,25 @@ dataset:</p>
 <span><span class="co">#&gt;  $ pairs.rel.EV  :'data.frame':  12169 obs. of  3 variables:</span></span>
 <span><span class="co">#&gt;   ..$ row : chr [1:12169] "2197" "1109" "2522" "1551" ...</span></span>
 <span><span class="co">#&gt;   ..$ col : chr [1:12169] "2201" "1909" "2526" "1553" ...</span></span>
-<span><span class="co">#&gt;   ..$ type: chr [1:12169] "related" "related" "related" "related" ...</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt;   ..$ type: chr [1:12169] "related" "related" "related" "related" ...</span></span>
+<span></span>
 <span><span class="co"># Print the first few rows and columns of the S.1 matrix</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"\nFirst 5 rows and columns of S.1:\n"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; First 5 rows and columns of S.1:</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DataGen.out</span><span class="op">$</span><span class="va">S.1</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; First 5 rows and columns of S.1:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DataGen.out</span><span class="op">$</span><span class="va">S.1</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt;            1         2         3         4         5</span></span>
 <span><span class="co">#&gt; 1 105.580934 43.364453  3.361235 -9.810005 15.368810</span></span>
 <span><span class="co">#&gt; 2  43.364453 88.723675 37.230356  8.684597 12.845912</span></span>
 <span><span class="co">#&gt; 3   3.361235 37.230356 96.011024 17.494887  5.660973</span></span>
 <span><span class="co">#&gt; 4  -9.810005  8.684597 17.494887 82.291532 33.665230</span></span>
-<span><span class="co">#&gt; 5  15.368810 12.845912  5.660973 33.665230 89.936481</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; 5  15.368810 12.845912  5.660973 33.665230 89.936481</span></span>
+<span></span>
 <span><span class="co"># Print the first few rows and columns of the S.2 matrix</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"\nFirst 5 rows and columns of S.2:\n"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; First 5 rows and columns of S.2:</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DataGen.out</span><span class="op">$</span><span class="va">S.2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; First 5 rows and columns of S.2:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DataGen.out</span><span class="op">$</span><span class="va">S.2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             1001       1002       1003      1004        1005</span></span>
 <span><span class="co">#&gt; 1001 209.1239804   48.75914   60.15316 -22.56948   0.3631436</span></span>
 <span><span class="co">#&gt; 1002  48.7591430  237.38368 -105.99344 -13.30921 -19.3541151</span></span>
