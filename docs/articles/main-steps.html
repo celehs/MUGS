@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Multisource Graph Synthesis with EHR data • MUGS</title>
+<title>Multisource Graph Synthesis with EHR Data • MUGS</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -14,9 +14,9 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Multisource Graph Synthesis with EHR data">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Multisource Graph Synthesis with EHR Data">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -67,7 +67,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Multisource Graph Synthesis with EHR data</h1>
+      <h1>Multisource Graph Synthesis with EHR Data</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/celehs/MUGS/blob/HEAD/vignettes/main-steps.Rmd" class="external-link"><code>vignettes/main-steps.Rmd</code></a></small>
@@ -87,6 +87,31 @@ used for hyperparameters tuning, i.e., pairs.rel.CV. If you also want to
 perform evaluation of the code embeddings, please load the code-code
 pairs used for AUC calculation, i.e., pairs.rel.EV.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Download and load a dataset</span></span>
+<span><span class="va">pairs.rel.CV</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_pairs_rel_CV.html">load_pairs_rel_CV</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pairs.rel.CV</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pairs.rel.EV</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_pairs_rel_EV.html">load_pairs_rel_EV</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pairs.rel.CV</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">S_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_S_1.html">load_S_1</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">S_1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">S.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_S_1.html">load_S_1</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">S.2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">U.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_S_1.html">load_S_1</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">U.1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">U.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_S_1.html">load_S_1</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">U.2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">X.group.source</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_X_group_source.html">load_X_group_source</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">X.group.source</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">X.group.target</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_X_group_target.html">load_X_group_target</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">X.group.target</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">S.1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">S.2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">X.group.source</span><span class="op">)</span></span>
@@ -104,7 +129,7 @@ determining when the algorithm should stop iterating. The seed parameter
 ensures reproducibility of results. The p parameter defines the
 dimension of the embedding vector, and n.group specifies the number of
 code groups.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/MUGS.html">MUGS</a></span><span class="op">(</span>TUNE <span class="op">=</span> <span class="cn">T</span>, Eva <span class="op">=</span> <span class="cn">F</span>, Lambda <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">100</span><span class="op">)</span>, Lambda.delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">10000</span><span class="op">)</span>, n.core<span class="op">=</span><span class="fl">4</span>, tol<span class="op">=</span><span class="fl">1</span>, seed<span class="op">=</span><span class="fl">1</span>, </span>
 <span>     S.1 <span class="op">=</span> <span class="va">S.1</span>, S.2 <span class="op">=</span> <span class="va">S.2</span>, X.group.source <span class="op">=</span> <span class="va">X.group.source</span>, X.group.target<span class="op">=</span><span class="va">X.group.target</span>, </span>
 <span>     pairs.rel.CV <span class="op">=</span>  <span class="va">pairs.rel.CV</span>, pairs.rel.EV <span class="op">=</span>  <span class="va">pairs.rel.EV</span>, p <span class="op">=</span> <span class="fl">10</span>, n.group <span class="op">=</span> <span class="fl">400</span><span class="op">)</span></span></code></pre></div>
@@ -115,7 +140,7 @@ matrices for the two sites and lists of homogeneous codes (codes similar
 across sites) and heterogeneous codes (codes different across sites). If
 you wish to evaluate the MUGS code embeddings further, using the
 pairs.rel.EV dataset for AUC calculation, set Eva = TRUE.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/MUGS.html">MUGS</a></span><span class="op">(</span>TUNE <span class="op">=</span> <span class="cn">F</span>, Eva <span class="op">=</span> <span class="cn">T</span>, Lambda <span class="op">=</span> <span class="fl">10</span>, Lambda.delta <span class="op">=</span> <span class="fl">1000</span>, n.core<span class="op">=</span><span class="fl">4</span>, tol<span class="op">=</span><span class="fl">1</span>, seed<span class="op">=</span><span class="fl">1</span>, </span>
 <span>     S.1 <span class="op">=</span> <span class="va">S.1</span>, S.2 <span class="op">=</span> <span class="va">S.2</span>, X.group.source <span class="op">=</span> <span class="va">X.group.source</span>, X.group.target<span class="op">=</span><span class="va">X.group.target</span>, </span>
 <span>     pairs.rel.CV <span class="op">=</span>  <span class="va">pairs.rel.CV</span>, pairs.rel.EV <span class="op">=</span>  <span class="va">pairs.rel.EV</span>, p <span class="op">=</span> <span class="fl">10</span>, n.group <span class="op">=</span> <span class="fl">400</span><span class="op">)</span></span></code></pre></div>
