@@ -39,7 +39,13 @@ devtools_check:
 
 vignette:
 	cd vignettes;\
-	R -e "rmarkdown::render('MUGS.Rmd')"
+	R -e "rmarkdown::render('CodeEff_Matrix_usage.Rmd')";\
+	R -e "rmarkdown::render('CodeSiteEff_I2_par_usage.Rmd')";\
+	R -e "rmarkdown::render('DataGen_rare_group_usage.Rmd')";\
+	R -e "rmarkdown::render('Evaluation_sim_usage.Rmd')";\
+	R -e "rmarkdown::render('get_embed_usage.Rmd')";\
+	R -e "rmarkdown::render('GroupEff_par_usage.Rmd')";\
+	R -e "rmarkdown::render('main-steps.Rmd')"
 
 clean:
 	$(RM) doc.pdf
