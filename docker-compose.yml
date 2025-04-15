@@ -1,0 +1,37 @@
+services:
+  manual:
+    build: ./
+    volumes:
+      - ./:/MUGS/
+    working_dir: /MUGS
+    command: make doc.pdf
+  vignette:
+    build: ./
+    volumes:
+      - ./:/MUGS/
+    working_dir: /MUGS
+    command: make vignette
+  build_doc:
+    build: ./
+    volumes:
+      - ./:/MUGS/
+    working_dir: /MUGS/
+    command: make roxygenise
+  pkg_test:
+    build: ./
+    volumes:
+      - ./:/MUGS/
+    working_dir: /MUGS/
+    command: make devtools_test
+  pkg_check:
+    build: ./
+    volumes:
+      - ./:/MUGS/
+    working_dir: /MUGS/
+    command: make
+  pkg_submit:
+    build: ./
+    volumes:
+      - ./:/MUGS/
+    working_dir: /MUGS/
+    command: make submit

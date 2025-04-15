@@ -1,7 +1,5 @@
 #' Main function for MUGS algorithm
 #'
-#' @importFrom rsvd rsvd
-#'
 #' @param TUNE Logical value indicating whether the function should tune parameters 'TRUE' or use predefined parameters 'FALSE'.
 #' @param Eva Logical value indicating whether to perform evaluation (TRUE) or skip it (FALSE).
 #' @param Lambda The candidate values for the tuning parameter controls the intensity of penalization on the code effects.

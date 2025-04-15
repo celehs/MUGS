@@ -1,15 +1,5 @@
 #' Function Used To Estimate Code-Site Effects Parallelly
 #'
-#' @importFrom parallel makeCluster stopCluster
-#' @importFrom doSNOW registerDoSNOW
-#' @importFrom foreach %dopar% foreach
-#' @importFrom grpreg grpreg
-#' @importFrom glmnet glmnet
-#' @importFrom stats na.omit
-#' @importFrom dplyr anti_join
-#' @importFrom mvtnorm rmvnorm
-#'
-#'
 #' @param S.1 SPPMI from the source site
 #' @param S.2 SPPMI from the target site
 #' @param n1 the number of codes from the source site

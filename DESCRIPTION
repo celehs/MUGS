@@ -4,6 +4,7 @@ Title: Multisource Graph Synthesis with EHR Data
 Version: 0.1.0
 Authors@R: c(
     person(given = "Mengyan", family = "Li", email = "mengyanli@bentley.edu", role = c("cre", "aut")),
+    person("Thomas", "Charlon", role = "ctb", c(ORCID = "0000-0001-7497-0470")),
     person(given = "Xiaoou", family = "Li", role = "aut"),
     person(given = "Tianxi", family = "Cai", role = "aut"),
     person(given = "PARSE", family = "LTD", email = "software@parse-health.org", role = "aut"),
@@ -32,6 +33,7 @@ Imports:
   dplyr,
   foreach,
   glmnet,
+  grplasso,
   grpreg,
   mvtnorm,
   pROC,
