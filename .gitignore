@@ -3,3 +3,6 @@
 .Rdata
 .Rhistory
 *.tar.gz
+/doc/
+/Meta/
+vignettes/*.R

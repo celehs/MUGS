@@ -1,8 +1,6 @@
 ---
 title: "Multisource Graph Synthesis with EHR Data"
-output:
-  rmarkdown::html_vignette:
-    output_dir: "C:/MUGS/MUGS/doc"
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Multisource Graph Synthesis with EHR Data}
   %\VignetteEngine{knitr::rmarkdown}
