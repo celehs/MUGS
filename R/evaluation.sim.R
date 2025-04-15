@@ -1,9 +1,5 @@
 #' Function Used For Tuning And Evaluation
 #'
-#' @importFrom stats na.omit
-#' @importFrom dplyr anti_join
-#' @importFrom pROC auc
-#'
 #' @param pairs.rel the known code-code pairs
 #' @param U the code embedding matrix
 #'

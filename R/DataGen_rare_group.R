@@ -1,13 +1,6 @@
 #' Function used to generate input data (used only for Simulations)
 #' Generate SPPMIs, dummy matrices based on prior group structures, and code-code pairs for tuning and evaluation
 #'
-#' @importFrom MASS mvrnorm
-#' @importFrom mvtnorm rmvnorm
-#' @importFrom utils combn
-#' @importFrom stats rnorm
-#' @importFrom fastDummies dummy_cols
-#' @importFrom methods signature
-#'
 #' @param seed for reproducibility
 #' @param p the length of an embedding
 #' @param n1 the number of codes in site 1

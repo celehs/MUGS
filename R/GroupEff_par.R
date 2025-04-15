@@ -1,10 +1,5 @@
 #' Function Used To Estimate Group Effects Parallelly
 #'
-#' @importFrom parallel makeCluster stopCluster
-#' @importFrom doSNOW registerDoSNOW
-#' @importFrom foreach %dopar% foreach
-#' @importFrom glmnet glmnet
-#'
 #' @param S.MGB SPPMI from the source site
 #' @param S.BCH SPPMI from the target site
 #' @param n.MGB the number of codes from the source site
