@@ -92,7 +92,7 @@ GroupEff_par <- function(S.MGB, S.BCH, n.MGB, n.BCH, U.MGB, U.BCH, V.MGB, V.BCH,
   }
   stopCluster(cl)
   colnames(BETA) <- name.both
-  BETA.1 <- t(cbind(BETA.BCHonly, BETA.MGBonly, BETA))
+  BETA.1 <- t(cbind(BETA.BCHonly, BETA.MGBonly, as.matrix(BETA)))
   beta <- BETA.1[match(rownames(beta.int),rownames(BETA.1)),]
   dif_F <- norm(beta- beta.int, type = "F")^2/(p*n.group)
   X.group <- rbind(X.MGB.group,X.BCH.group)

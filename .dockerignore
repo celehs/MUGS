@@ -1,5 +1,4 @@
 data-raw/
-data/
 .Rhistory
 .RData
 *.tar.gz
@@ -8,5 +7,4 @@ data/
 .Rproj.user/
 .git/
 .gitignore
-tests/
 vignettes/*.html
