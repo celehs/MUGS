@@ -5,7 +5,7 @@ library(glmnet)
 library(Matrix)
 
 test_that("GroupEff_par works with multiple groups in both sites", {
-  skip("Temporarily skipping this test to debug failing code.")
+  #skip("Temporarily skipping this test to debug failing code.")
   set.seed(123)
 
   # Parameters
