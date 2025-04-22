@@ -34,6 +34,7 @@ Imports:
   grplasso,
   foreach,
   glmnet,
+  grplasso,
   grpreg,
   inline,
   mvtnorm,

@@ -49,3 +49,4 @@ vignette:
 
 clean:
 	$(RM) doc.pdf
+
