@@ -4,13 +4,13 @@
 ^Meta$
 ^_pkgdown\.yml$
 ^pkgdown$
-^build_stderr\.txt$
-^build_stdout\.txt$
-^data$
-^inst$
-^\.git
-^\.gitignore
-^\.github
-^docs$
+^build_.*\.txt$
 
+^\.git$
+^\.github$
+^\.gitignore$
+
+^\.dockerignore$
+
+^docs$
 ^doc$

@@ -1,0 +1,12 @@
+data-raw/
+data/
+.Rhistory
+.RData
+*.tar.gz
+*.zip
+*.Rproj
+.Rproj.user/
+.git/
+.gitignore
+tests/
+vignettes/*.html
