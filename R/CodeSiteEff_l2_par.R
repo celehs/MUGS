@@ -1,3 +1,8 @@
+utils::globalVariables(c(
+  "S.1", "S.2", "U.1", "U.2",
+  "X.group.source", "X.group.target",
+  "pairs.rel.CV", "pairs.rel.EV","i","LinReg"
+))
 #' Function Used To Estimate Code-Site Effects Parallelly
 #'
 #' @param S.1 SPPMI from the source site

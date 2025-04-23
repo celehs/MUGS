@@ -5,12 +5,11 @@
 ^_pkgdown\.yml$
 ^pkgdown$
 ^build_.*\.txt$
-
 ^\.git$
 ^\.github$
 ^\.gitignore$
-
 ^\.dockerignore$
-
 ^docs$
 ^doc$
+^docker$
+^devops$

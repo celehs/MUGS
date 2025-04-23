@@ -43,7 +43,6 @@ data(U.2)
 data(X.group.source)
 data(X.group.target)
 ```
-
 ---
 
 ## Prepare Variables
@@ -51,14 +50,35 @@ data(X.group.target)
 Prepare the variables required for the `CodeEff_Matrix` function:
 
 ```{r prepare_variables}
+# Set parameters
+n1 <- 100
+n2 <- 100
+p <- 5
+
+# Initial right embeddings
+V.1 <- U.1
+V.2 <- U.2
+
+# Fix rownames to ensure alignment
+n1.no <- n1 - 50  # if you know n.common = 50
+rownames(U.1) <- as.character(seq_len(nrow(U.1)))  # "1" to "n1"
+rownames(U.2) <- as.character(seq(from = n1.no + 1, length.out = nrow(U.2)))
+rownames(S.1) <- rownames(U.1)
+rownames(S.2) <- rownames(U.2)
+rownames(V.1) <- rownames(U.1)
+rownames(V.2) <- rownames(U.2)
+
 # Extract names and find common codes
 names.list.1 <- rownames(S.1)
 names.list.2 <- rownames(S.2)
 common_codes <- intersect(names.list.1, names.list.2)
-full.name.list <- c(names.list.1, names.list.2)
 
-# Create the initial estimator matrix
-zeta.int <- matrix(0, 4000, 10)  # Replace with appropriate dimensions
+# Check for overlap
+if (length(common_codes) == 0) stop("Error: No common codes found between S.1 and S.2.")
+
+# Create zeta.int
+full.name.list <- c(names.list.1, names.list.2)
+zeta.int <- matrix(0, length(full.name.list), p)
 rownames(zeta.int) <- full.name.list
 ```
 
@@ -71,19 +91,19 @@ Run the `CodeEff_Matrix` function:
 ```{r run_function}
 # Estimate code effects
 CodeEff_Matrix.out <- CodeEff_Matrix(
-  S.1 = S.1,
-  S.2 = S.2, 
-  n1 = 2000, 
-  n2 = 2000, 
-  U.1 = U.1, 
-  U.2 = U.2, 
-  V.1 = U.1, 
-  V.2 = U.2, 
-  common_codes = common_codes, 
-  zeta.int = zeta.int, 
-  lambda = 10, 
-  p = 10
-)
+  S.1=S.1,
+  S.2=S.2,
+  n1=n1,
+  n2=n2,
+  U.1=U.1,
+  U.2=U.2,
+  V.1=U.1,
+  V.2=U.2,
+  common_codes = common_codes,
+  zeta.int = zeta.int,
+  lambda=10,
+  p=5
+  )
 ```
 
 ---

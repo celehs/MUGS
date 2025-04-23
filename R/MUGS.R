@@ -1,3 +1,8 @@
+utils::globalVariables(c(
+  "S.1", "S.2", "U.1", "U.2",
+  "X.group.source", "X.group.target",
+  "pairs.rel.CV", "pairs.rel.EV"
+))
 #' Main function for MUGS algorithm
 #'
 #' @param TUNE Logical value indicating whether the function should tune parameters 'TRUE' or use predefined parameters 'FALSE'.
@@ -55,11 +60,11 @@ MUGS <- function(TUNE = F, Eva = T,
   n1.no = n1 - n.common
   n2.no = n2 - n.common
 
-  ################  Initilization ################
-  # Single-site svd to obtain initial embeddings at ecah site
+  ################  Initialization ################
+  # Single-site svd to obtain initial embeddings at each site
   set.seed(1)
-  svd.1 <- rsvd(S.1, 200)
-  svd.2 <- rsvd(S.2, 200)
+  svd.1 <- rsvd(S.1, 3*p)
+  svd.2 <- rsvd(S.2, 3*p)
   emb.1 <- get_embed(svd.1,d=p)
   emb.2 <- get_embed(svd.2,d=p)
   rownames(emb.1) <- names.list.1
@@ -69,7 +74,7 @@ MUGS <- function(TUNE = F, Eva = T,
   comm.embed.2 <- emb.2[match( common_codes, rownames(emb.2)) ,]
   # orthogonal Procrustes problem based on overlapped parts
   A <- t(comm.embed.1)%*%comm.embed.2
-  eigenA<-eigen(t(A)%*%A + 0.0000000001*diag(p), symmetric = T)
+  eigenA<-eigen(t(A)%*%A + 10^-5*diag(p), symmetric = T)
   W <- A%*%eigenA$vectors%*%diag(eigenA$values^(-1/2), p, p)%*%t(eigenA$vectors)
   embed.1.init <- emb.1%*%W
   embed.2.init <- emb.2
@@ -245,7 +250,8 @@ MUGS <- function(TUNE = F, Eva = T,
         dif_loss <-  (loss.new.U - loss)/loss
         cat('\n dif_loss=', dif_loss)
       }
-      delta.spst.ovl[k1, k2]  <- sum(rowSums(abs(delta.int.U[rownames(delta.int.U)%in%common_codes,]))!=0)
+      delta.int.U.2 <- delta.int.U[(n1.no+1):(n1+n2) ,]
+      delta.spst.ovl[k1, k2]  <- sum(rowSums(abs(delta.int.U.2[rownames(delta.int.U.2)%in%common_codes,]))!=0)
       # validation
       if (TUNE==T){
         ans <- evaluation.sim(pairs.rel.CV,  U.2)
@@ -257,11 +263,11 @@ MUGS <- function(TUNE = F, Eva = T,
   # Tuning if TUNE==T and output the selected tuning parameters and the number of site-dissimilar codes
   if (TUNE==T){
     idx <- which(CV.res == max(CV.res), arr.ind = TRUE)
-    lambda.opt <- Lambda[idx[1]]
-    lambda.delta.opt <- Lambda.delta[idx[2]]
+    lambda.opt <- Lambda[idx[1,1]]
+    lambda.delta.opt <- Lambda.delta[idx[1,2]]
     cat('\n lambda1=', lambda.opt)
     cat('\n lambda2=', lambda.delta.opt)
-    cat('\n The number of site-heterogeneous codes =', delta.spst.ovl/2)
+    cat('\n The number of site-heterogeneous codes =', delta.spst.ovl)
   } else {
     # Output the embedding matrices, cosine similarity matrices, and the names of similar codes and dissimilar codes if TUNE==F
     if (Eva ==T ){
@@ -281,6 +287,6 @@ MUGS <- function(TUNE = F, Eva = T,
     dissimilar.codes <- rownames(delta.int.U)[rowSums(abs(delta.int.U))!=0]
     save(dissimilar.codes, file='dissimilar.codes.Rdata')
     #Sparsity of code-site effect
-    cat('\n The number of site-heterogeneous codes =', delta.spst.ovl/2)
+    cat('\n The number of site-heterogeneous codes =', delta.spst.ovl)
   }
 }

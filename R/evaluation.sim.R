@@ -1,3 +1,8 @@
+utils::globalVariables(c(
+  "S.1", "S.2", "U.1", "U.2",
+  "X.group.source", "X.group.target",
+  "pairs.rel.CV", "pairs.rel.EV"
+))
 #' Function Used For Tuning And Evaluation
 #'
 #' @param pairs.rel the known code-code pairs

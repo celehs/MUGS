@@ -51,14 +51,34 @@ data(U.2)
 Set up the variables required for the `CodeSiteEff_I2_par` function:
 
 ```{r prepare_variables}
-# Extract names and find common codes
+# Set parameters
+n1 <- 100
+n2 <- 100
+p <- 5
+
+# Ensure row and column names are consistent for matching
+rownames(U.1) <- as.character(seq_len(nrow(U.1)))  # "1" to "100"
+rownames(U.2) <- as.character(seq(from = 51, length.out = nrow(U.2)))  # "51" to "150"
+
+# Align S.1 and S.2 with embeddings
+rownames(S.1) <- rownames(U.1)
+colnames(S.1) <- rownames(U.1)
+
+rownames(S.2) <- rownames(U.2)
+colnames(S.2) <- rownames(U.2)
+
+# Get common codes
 names.list.1 <- rownames(S.1)
 names.list.2 <- rownames(S.2)
 common_codes <- intersect(names.list.1, names.list.2)
+n.common <- length(common_codes)
+
+if (n.common == 0) stop("Error: No common codes found between source and target sites.")
+
 full.name.list <- c(names.list.1, names.list.2)
 
-# Create the initial delta matrix
-delta.int <- matrix(0, 4000, 10)  # Adjust dimensions as needed
+# Initialize delta matrix
+delta.int <- matrix(0, length(full.name.list), p)
 rownames(delta.int) <- full.name.list
 ```
 
@@ -70,22 +90,21 @@ Run the `CodeSiteEff_I2_par` function:
 
 ```{r run_function}
 # Estimate site-specific effects
-CodeSiteEff_l2_par.out <- CodeSiteEff_l2_par(
-  S.1 = S.1, 
-  S.2 = S.2, 
-  n1 = 2000, 
-  n2 = 2000, 
-  U.1 = U.1, 
-  U.2 = U.2, 
-  V.1 = U.1, 
-  V.2 = U.2, 
-  delta.int = delta.int, 
-  lambda.delta = 1000, 
-  p = 10, 
-  common_codes = common_codes, 
-  n.common = 1000, 
-  n.core = 2
-)
+CodeSiteEff_l2_par.out <-  CodeSiteEff_l2_par(
+  S.1 = S.1,
+  S.2 = S.2,
+  n1 = 100,
+  n2 = 100,
+  U.1 = U.1,
+  U.2 = U.2,
+  V.1= U.1,
+  V.2 = U.2,
+  delta.int = delta.int,
+  lambda.delta = 3000,
+  p=5,
+  common_codes = common_codes,
+  n.common = 50,
+  n.core=2)
 ```
 
 ---

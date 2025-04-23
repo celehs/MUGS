@@ -1,3 +1,8 @@
+utils::globalVariables(c(
+  "S.1", "S.2", "U.1", "U.2",
+  "X.group.source", "X.group.target",
+  "pairs.rel.CV", "pairs.rel.EV"
+))
 #'Function For Getting Embedding From SVD
 #'
 #' @param mysvd the (managed) svd result (adding an element with 'names')

@@ -23,55 +23,56 @@ Load data into R, including the SPPMI matrix from the two sites with row names a
 
 ```{r, eval=FALSE}
 # Download and load a dataset
-pairs.rel.CV <- load_pairs_rel_CV()
-head(pairs.rel.CV)
+#pairs.rel.CV <- load_pairs_rel_CV()
+#head(pairs.rel.CV)
 
-pairs.rel.EV <- load_pairs_rel_EV()
-head(pairs.rel.CV)
+#pairs.rel.EV <- load_pairs_rel_EV()
+#head(pairs.rel.CV)
 
-S_1 <- load_S_1()
-head(S_1)
+#S_1 <- load_S_1()
+#head(S_1)
 
-S.2 <- load_S_1()
-head(S.2)
+#S.2 <- load_S_1()
+#head(S.2)
 
-U.1 <- load_S_1()
-head(U.1)
+#U.1 <- load_S_1()
+#head(U.1)
 
-U.2 <- load_S_1()
-head(U.2)
+#U.2 <- load_S_1()
+#head(U.2)
 
-X.group.source <- load_X_group_source()
-head(X.group.source)
+#X.group.source <- load_X_group_source()
+#head(X.group.source)
 
-X.group.target <- load_X_group_target()
-head(X.group.target)
+#X.group.target <- load_X_group_target()
+#head(X.group.target)
 ```
 
 ```{r, eval=FALSE}
-data(S.1)
-data(S.2)
-data(X.group.source)
-data(X.group.target)
-data(pairs.rel.CV)
-data(pairs.rel.EV)
+load(system.file("extdata", "S.1.Rdata", package = "MUGS"))
+load(system.file("extdata", "S.2.Rdata", package = "MUGS"))
+load(system.file("extdata", "X.group.source.Rdata", package = "MUGS"))
+load(system.file("extdata", "X.group.target.Rdata", package = "MUGS"))
+load(system.file("extdata", "pairs.rel.CV.Rdata", package = "MUGS"))
+load(system.file("extdata", "pairs.rel.EV.Rdata", package = "MUGS"))
+
 ```
 
 
 To tune the hyperparameters for code effects and code-site effects, set TUNE = TRUE and Eva = FALSE. The Lambda parameter should be a vector of positive values representing the tuning parameter for code effects. Similarly, Lambda.delta should be a vector of positive values for the tuning parameter for code-site effects. The n.core parameter specifies the number of cores to use for parallel computing, enhancing performance. The tol parameter sets the tolerance for convergence, determining when the algorithm should stop iterating. The seed parameter ensures reproducibility of results. The p parameter defines the dimension of the embedding vector, and n.group specifies the number of code groups.
 
 ```{r, eval=FALSE}
-MUGS(TUNE = T, Eva = F, Lambda = c(10, 100), Lambda.delta = c(1000, 10000), n.core=4, tol=1, seed=1, 
+MUGS(TUNE = T, Eva = F, Lambda = c(10, 20, 30), Lambda.delta = c(4500, 5000, 5500), n.core=1, tol=0.1, seed=1, 
      S.1 = S.1, S.2 = S.2, X.group.source = X.group.source, X.group.target=X.group.target, 
-     pairs.rel.CV =  pairs.rel.CV, pairs.rel.EV =  pairs.rel.EV, p = 10, n.group = 400)
+     pairs.rel.CV =  pairs.rel.CV, pairs.rel.EV =  pairs.rel.EV, p = 5, n.group = 30)
 ```
 
 With optimal hyperparameters determined, set TUNE = FALSE to generate MUGS embeddings for code groups, as well as individual code embeddings at the two sites. This configuration will also produce cosine similarity matrices for the two sites and lists of homogeneous codes (codes similar across sites) and heterogeneous codes (codes different across sites). If you wish to evaluate the MUGS code embeddings further, using the pairs.rel.EV dataset for AUC calculation, set Eva = TRUE.
 
 ```{r, eval=FALSE}
-MUGS(TUNE = F, Eva = T, Lambda = 10, Lambda.delta = 1000, n.core=4, tol=1, seed=1, 
+MUGS(TUNE = F, Eva = T, Lambda = 10, Lambda.delta = 5000, n.core=1, tol=0.1, seed=1, 
      S.1 = S.1, S.2 = S.2, X.group.source = X.group.source, X.group.target=X.group.target, 
-     pairs.rel.CV =  pairs.rel.CV, pairs.rel.EV =  pairs.rel.EV, p = 10, n.group = 400)
+     pairs.rel.CV =  pairs.rel.CV, pairs.rel.EV =  pairs.rel.EV, p = 5, n.group = 30)
 ```
 
 ## References
