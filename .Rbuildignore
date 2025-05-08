@@ -13,3 +13,5 @@
 ^doc$
 ^docker$
 ^devops$
+^CRAN-SUBMISSION$
+^cran-comments\.md$
