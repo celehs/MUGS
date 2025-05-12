@@ -3,45 +3,41 @@ utils::globalVariables(c(
   "X.group.source", "X.group.target",
   "pairs.rel.CV", "pairs.rel.EV"
 ))
+
 #' Main function for MUGS algorithm
 #'
-#' @param TUNE Logical value indicating whether the function should tune parameters 'TRUE' or use predefined parameters 'FALSE'.
+#' @param TUNE Logical value indicating whether the function should tune parameters TRUE or use predefined parameters FALSE.
 #' @param Eva Logical value indicating whether to perform evaluation (TRUE) or skip it (FALSE).
-#' @param Lambda The candidate values for the tuning parameter controls the intensity of penalization on the code effects.
-#' @param Lambda.delta The candidate values for the tuning parameter controls the intensity of penalization on the code-site effects.
+#' @param Lambda The candidate values for the tuning parameter controlling the intensity of penalization on the code effects.
+#' @param Lambda.delta The candidate values for the tuning parameter controlling the intensity of penalization on the code-site effects.
 #' @param n.core Integer specifying the number of cores to use for parallel processing.
 #' @param tol Numeric value representing the tolerance level for convergence in the algorithm.
-#' @param seed Integer used to set the seed for random number generation, ensuring reproducibility of the simulated data or any stochastic process within the algorithm.
+#' @param seed Integer used to set the seed for random number generation, ensuring reproducibility. Set to NULL to disable.
 #' @param S.1 The SPPMI matrix from site 1.
 #' @param S.2 The SPPMI matrix from site 2.
-#' @param X.group.source The dummy matrix on the group structure of codes at site 1.
-#' @param X.group.target The dummy matrix on the group structure of codes at site 2.
-#' @param pairs.rel.CV Code-code pairs used for tuning via cross validation
-#' @param pairs.rel.EV Code-code pairs used for evaluation
+#' @param X.group.source The dummy matrix representing the group structure of codes at site 1.
+#' @param X.group.target The dummy matrix representing the group structure of codes at site 2.
+#' @param pairs.rel.CV Code-code pairs used for tuning via cross-validation.
+#' @param pairs.rel.EV Code-code pairs used for evaluation.
 #' @param p Integer indicating the length of embeddings.
 #' @param n.group The number of groups.
+#' @param outdir Optional directory to write output files. Defaults to a temporary directory.
 #'
-#' @return The final result
+#' @return A list or saved files containing the embedding matrices, similarity matrices, and site-heterogeneous code analysis.
 #' @export
-#'
+MUGS <- function(TUNE = FALSE, Eva = TRUE,
+                 Lambda = c(10), Lambda.delta = c(1000), n.core = 4, tol = 1, seed = NULL,
+                 S.1 = NULL, S.2 = NULL, X.group.source = NULL, X.group.target = NULL,
+                 pairs.rel.CV = NULL, pairs.rel.EV = NULL, p = 100, n.group = 400, outdir = NULL) {
 
-
-MUGS <- function(TUNE = F, Eva = T,
-                 Lambda = c(10), Lambda.delta = c(1000), n.core=4, tol=1, seed=1,
-                 S.1 = NULL, S.2 = NULL, X.group.source = NULL, X.group.target=NULL,
-                 pairs.rel.CV = NULL, pairs.rel.EV = NULL, p = 100, n.group = 400) {
-
-  # Ensure all required packages are installed and available
   required_packages <- c("rsvd", "dplyr", "pROC")
-
-  # Check for missing packages and stop if any are not installed
   missing_packages <- required_packages[!sapply(required_packages, requireNamespace, quietly = TRUE)]
   if (length(missing_packages) > 0) {
     stop("Missing packages need to be installed: ", paste(missing_packages, collapse = ", "), call. = FALSE)
   }
-
-  # Load required packages
   lapply(required_packages, library, character.only = TRUE)
+
+  if (!is.null(seed)) set.seed(seed)
 
   ################  Data Preperation ################
   # Ensure data is provided for non-simulated cases
@@ -62,7 +58,6 @@ MUGS <- function(TUNE = F, Eva = T,
 
   ################  Initialization ################
   # Single-site svd to obtain initial embeddings at each site
-  set.seed(1)
   svd.1 <- rsvd(S.1, 3*p)
   svd.2 <- rsvd(S.2, 3*p)
   emb.1 <- get_embed(svd.1,d=p)
@@ -74,7 +69,7 @@ MUGS <- function(TUNE = F, Eva = T,
   comm.embed.2 <- emb.2[match( common_codes, rownames(emb.2)) ,]
   # orthogonal Procrustes problem based on overlapped parts
   A <- t(comm.embed.1)%*%comm.embed.2
-  eigenA<-eigen(t(A)%*%A + 10^-5*diag(p), symmetric = T)
+  eigenA<-eigen(t(A)%*%A + 10^-5*diag(p), symmetric = TRUE)
   W <- A%*%eigenA$vectors%*%diag(eigenA$values^(-1/2), p, p)%*%t(eigenA$vectors)
   embed.1.init <- emb.1%*%W
   embed.2.init <- emb.2
@@ -86,7 +81,7 @@ MUGS <- function(TUNE = F, Eva = T,
   embed.init <- rbind(embed.1.init,embed.2.init)
   name.list <- rownames(embed.init)
   for (i in 1:n.group){
-    beta.int[i, ] <- colMeans(embed.init[X.group[,i]==T ,])
+    beta.int[i, ] <- colMeans(embed.init[X.group[,i]==TRUE ,])
   }
   # Calculate initial code effect
   name.list.unique <- unique(c(names.list.1, names.list.2))
@@ -110,10 +105,10 @@ MUGS <- function(TUNE = F, Eva = T,
   CV.res <- matrix(0, K1, K2)
 
   for (k1 in 1:K1) {
-    cat('\n k1=', k1)
+    message("k1 = ", k1)
     lambda = Lambda[k1]
     for (k2 in 1:K2) {
-      cat('\n k2=', k2)
+      message("k2 = ", k2)
       lambda.delta = Lambda.delta[k2]
       # initialization
       U.1 <- embed.1.init
@@ -149,7 +144,7 @@ MUGS <- function(TUNE = F, Eva = T,
         loss_p_V <- loss_zeta_V +  loss_delta_V
         loss_p_U <- loss_zeta_U +  loss_delta_U
         loss <- loss_main +  loss_p_V + loss_p_U
-        cat('\n loss:',loss)
+        message('\n loss:',loss)
         loss.V  <- loss
         dif_loss_V <-10
         # Update V
@@ -161,7 +156,7 @@ MUGS <- function(TUNE = F, Eva = T,
           V.1 <- as.matrix(GroupEff.out$V.MGB.new)
           V.2 <- as.matrix(GroupEff.out$V.BCH.new)
           temp.group <- (norm(S.1 - U.1%*%t(V.1), type = 'F')^2 + norm(S.2 - U.2%*%t(V.2), type = 'F')^2)/(n1^2 + n2^2)
-          cat('\n diff_groupEff=', temp.group - loss_main)
+          message('\n diff_groupEff=', temp.group - loss_main)
           # Update code effects
           CodeEff.out <-CodeEff_Matrix(S.1, S.2, n1, n2, U.1, U.2, V.1, V.2, common_codes, zeta.int.V, lambda, p)
           zeta.int.V <- as.matrix(CodeEff.out$zeta)
@@ -171,7 +166,7 @@ MUGS <- function(TUNE = F, Eva = T,
           temp.code.p.ovl <- lambda*sqrt(log(p)/(n1+n2))*norm((zeta.int.V[1:n1, ])[rownames(zeta.int.V[1:n1, ])%in%common_codes, ],type = 'F')^2/(n1^2 + n2^2)
           temp.code.p.1 <-lambda*sqrt(log(p)/n1)*norm((zeta.int.V[1:n1, ])[!(rownames(zeta.int.V[1:n1, ])%in%common_codes), ],type = 'F')^2/(n1^2 + n2^2)
           temp.code.p.2 <-lambda*sqrt(log(p)/n2)*norm((zeta.int.V[(1+n1):(n1+n2), ])[!(rownames(zeta.int.V[(1+n1):(n1+n2), ])%in%common_codes), ],type = 'F')^2/(n1^2 + n2^2)
-          cat('\n diff_CodeEff=', temp.code.main-temp.group+temp.code.p.ovl+temp.code.p.1+temp.code.p.2-loss_zeta_V)
+          message('\n diff_CodeEff=', temp.code.main-temp.group+temp.code.p.ovl+temp.code.p.1+temp.code.p.2-loss_zeta_V)
           # Update code-site effects
           CodeSiteEff.out <- CodeSiteEff_l2_par(S.1, S.2, n1, n2, U.1, U.2, V.1, V.2, delta.int.V, lambda.delta, p, common_codes, n.common, n.core)
           delta.int.V <- as.matrix(CodeSiteEff.out$delta)
@@ -179,7 +174,7 @@ MUGS <- function(TUNE = F, Eva = T,
           V.2 <- as.matrix(CodeSiteEff.out$V.2.new)
           temp.codesite.main <- (norm(S.1 - U.1%*%t(V.1), type = 'F')^2 + norm(S.2 - U.2%*%t(V.2), type = 'F')^2)/(n1^2 + n2^2)
           temp.codesite.p <- lambda.delta*sqrt(log(p)/n1)*sum(apply(delta.int.V[1:n1,], 1, norm, "2"))/(n1^2 + n2^2) +lambda.delta*sqrt(log(p)/n2)*sum(apply(delta.int.V[(1+n1):(n1+n2),], 1, norm, "2"))/(n1^2 + n2^2)
-          cat('\n diff_CodeSiteEff=', temp.codesite.main - temp.code.main + temp.codesite.p -loss_delta_V)
+          message('\n diff_CodeSiteEff=', temp.codesite.main - temp.code.main + temp.codesite.p -loss_delta_V)
 
           loss_main <- (norm(S.1 - U.1%*%t(V.1), type = 'F')^2 + norm(S.2 - U.2%*%t(V.2), type = 'F')^2)/(n1^2 + n2^2)
           loss_zeta_V_ovl <- lambda*sqrt(log(p)/(n1+n2))*norm((zeta.int.V[1:n1, ])[rownames(zeta.int.V[1:n1, ])%in%common_codes, ],type = 'F')^2/(n1^2 + n2^2)
@@ -194,7 +189,7 @@ MUGS <- function(TUNE = F, Eva = T,
           loss_p_V <- loss_zeta_V +  loss_delta_V
           loss.new.V <- loss_main + loss_p_V + loss_p_U
           dif_loss_V <- (loss.new.V - loss.V)/loss.V
-          cat('\n dif_loss_V',dif_loss_V)
+          message('\n dif_loss_V',dif_loss_V)
           loss.V <- loss.new.V
         }
         # Update U
@@ -208,7 +203,7 @@ MUGS <- function(TUNE = F, Eva = T,
           U.1 <- as.matrix(GroupEff.out$V.MGB.new)
           U.2 <- as.matrix(GroupEff.out$V.BCH.new)
           temp.group <- (norm(S.1 - U.1%*%t(V.1), type = 'F')^2 + norm(S.2 - U.2%*%t(V.2), type = 'F')^2)/(n1^2 + n2^2)
-          cat('\n diff_groupEff=', temp.group - loss_main)
+          message('\n diff_groupEff=', temp.group - loss_main)
 
           # Update code effect
           CodeEff.out <-CodeEff_Matrix(t(S.1), t(S.2), n1, n2, V.1, V.2, U.1, U.2, common_codes, zeta.int.U, lambda, p)
@@ -219,7 +214,7 @@ MUGS <- function(TUNE = F, Eva = T,
           temp.code.p.ovl <- lambda*sqrt(log(p)/(n1+n2))*norm((zeta.int.U[1:n1, ])[rownames(zeta.int.U[1:n1, ])%in%common_codes, ],type = 'F')^2/(n1^2 + n2^2)
           temp.code.p.1 <-lambda*sqrt(log(p)/n1)*norm((zeta.int.U[1:n1, ])[!(rownames(zeta.int.U[1:n1, ])%in%common_codes), ],type = 'F')^2/(n1^2 + n2^2)
           temp.code.p.2 <-lambda*sqrt(log(p)/n2)*norm((zeta.int.U[(1+n1):(n1+n2), ])[!(rownames(zeta.int.U[(1+n1):(n1+n2), ])%in%common_codes), ],type = 'F')^2/(n1^2 + n2^2)
-          cat('\n diff_codeEff=', temp.code.main-temp.group+temp.code.p.ovl+temp.code.p.1+temp.code.p.2-loss_zeta_U)
+          message('\n diff_codeEff=', temp.code.main-temp.group+temp.code.p.ovl+temp.code.p.1+temp.code.p.2-loss_zeta_U)
 
           # Update code-site effect
           CodeSiteEff.out <- CodeSiteEff_l2_par(t(S.1), t(S.2), n1, n2, V.1, V.2, U.1, U.2, delta.int.U, lambda.delta, p, common_codes, n.common, n.core)
@@ -228,7 +223,7 @@ MUGS <- function(TUNE = F, Eva = T,
           U.2 <- as.matrix(CodeSiteEff.out$V.2.new)
           temp.codesite.main <- (norm(S.1 - U.1%*%t(V.1), type = 'F')^2 + norm(S.2 - U.2%*%t(V.2), type = 'F')^2)/(n1^2 + n2^2)
           temp.codesite.p <- lambda.delta*sqrt(log(p)/n1)*sum(apply(delta.int.U[1:n1,], 1, norm, "2"))/(n1^2 + n2^2) +lambda.delta*sqrt(log(p)/n2)*sum(apply(delta.int.U[(1+n1):(n1+n2),], 1, norm, "2"))/(n1^2 + n2^2)
-          cat('\n diff_CodeSiteEff=', temp.codesite.main - temp.code.main + temp.codesite.p - loss_delta_U)
+          message('\n diff_CodeSiteEff=', temp.codesite.main - temp.code.main + temp.codesite.p - loss_delta_U)
 
           loss_main <- (norm(S.1 - U.1%*%t(V.1), type = 'F')^2 + norm(S.2 - U.2%*%t(V.2), type = 'F')^2)/(n1^2 + n2^2)
           loss_zeta_U_ovl <- lambda*sqrt(log(p)/(n1+n2))*norm((zeta.int.U[1:n1, ])[rownames(zeta.int.U[1:n1, ])%in%common_codes, ],type = 'F')^2/(n1^2 + n2^2)
@@ -244,16 +239,16 @@ MUGS <- function(TUNE = F, Eva = T,
           loss_p_U <- loss_zeta_U + loss_delta_U
           loss.new.U <- loss_main + loss_p_V + loss_p_U
           dif_loss_U <- (loss.new.U - loss.U)/loss.U
-          cat('\n dif_loss_U',dif_loss_U)
+          message('\n dif_loss_U',dif_loss_U)
           loss.U <- loss.new.U
         }
         dif_loss <-  (loss.new.U - loss)/loss
-        cat('\n dif_loss=', dif_loss)
+        message('\n dif_loss=', dif_loss)
       }
       delta.int.U.2 <- delta.int.U[(n1.no+1):(n1+n2) ,]
       delta.spst.ovl[k1, k2]  <- sum(rowSums(abs(delta.int.U.2[rownames(delta.int.U.2)%in%common_codes,]))!=0)
       # validation
-      if (TUNE==T){
+      if (TUNE==TRUE){
         ans <- evaluation.sim(pairs.rel.CV,  U.2)
         CV.res[k1, k2] <- ans$AUC.rel
       }
@@ -261,32 +256,33 @@ MUGS <- function(TUNE = F, Eva = T,
   }
 
   # Tuning if TUNE==T and output the selected tuning parameters and the number of site-dissimilar codes
-  if (TUNE==T){
+  if (TUNE==TRUE){
     idx <- which(CV.res == max(CV.res), arr.ind = TRUE)
     lambda.opt <- Lambda[idx[1,1]]
     lambda.delta.opt <- Lambda.delta[idx[1,2]]
-    cat('\n lambda1=', lambda.opt)
-    cat('\n lambda2=', lambda.delta.opt)
-    cat('\n The number of site-heterogeneous codes =', delta.spst.ovl)
+    message("lambda1 = ", lambda.opt)
+    message("lambda2 = ", lambda.delta.opt)
+    message("The number of site-heterogeneous codes = ", delta.spst.ovl)
   } else {
     # Output the embedding matrices, cosine similarity matrices, and the names of similar codes and dissimilar codes if TUNE==F
-    if (Eva ==T ){
+    if (Eva ==TRUE ){
       ans <- evaluation.sim(pairs.rel.EV,  U.2)
-      cat('\n evaluation AUC =', ans$AUC.rel )
+      message('\n evaluation AUC =', ans$AUC.rel )
     }
-    save(U.1, file = 'U.1.Rdata')
-    save(U.2, file = 'U.2.Rdata')
+    if (is.null(outdir)) outdir <- tempdir()
+    save(U.1, file = file.path(outdir, "U.1.Rdata"))
+    save(U.2, file = file.path(outdir, "U.2.Rdata"))
     CS.1 <- (U.1/apply(U.1,1,norm,'2'))%*%t(U.1/apply(U.1,1,norm,'2'))
     CS.2 <- (U.2/apply(U.2,1,norm,'2'))%*%t(U.2/apply(U.2,1,norm,'2'))
-    save(CS.1, file = 'CS.1.Rdata')
-    save(CS.2, file = 'CS.2.Rdata')
-    save(beta.int.U, file = 'beta.Rdata')
+    save(CS.1, file = file.path(outdir, "CS.1.Rdata"))
+    save(CS.2, file = file.path(outdir, "CS.2.Rdata"))
+    save(beta.int.U, file = file.path(outdir, "beta.Rdata"))
     # Similar codes between sites vs dissimilar codes between sites
     similar.codes <-intersect (rownames(delta.int.U)[rowSums(abs(delta.int.U))==0], common_codes )
-    save(similar.codes, file='similar.codes.Rdata')
+    save(similar.codes, file = file.path(outdir, "similar.codes.Rdata"))
     dissimilar.codes <- rownames(delta.int.U)[rowSums(abs(delta.int.U))!=0]
-    save(dissimilar.codes, file='dissimilar.codes.Rdata')
+    save(dissimilar.codes, file = file.path(outdir, "dissimilar.codes.Rdata"))
     #Sparsity of code-site effect
-    cat('\n The number of site-heterogeneous codes =', delta.spst.ovl)
+    message("The number of site-heterogeneous codes = ", delta.spst.ovl)
   }
 }

@@ -60,7 +60,7 @@ GroupEff_par <- function(S.MGB, S.BCH, n.MGB, n.BCH, U.MGB, U.BCH, V.MGB, V.BCH,
       Y.BCH.1 <-as.vector(S.BCH[,rownames(S.BCH)%in%name.BCH])
       Y.BCH <- Y.BCH.1 - as.vector(as.matrix(U.BCH)%*%t(temp.BCH))
       V.j.BCH <- do.call(rbind, replicate(nn, U.BCH, simplify=FALSE))
-      m <- glmnet(V.j.BCH, Y.BCH, alpha = 0, family = 'gaussian', lambda = lambda*2/length(Y.BCH), intercept=F)
+      m <- glmnet(V.j.BCH, Y.BCH, alpha = 0, family = 'gaussian', lambda = lambda*2/length(Y.BCH), intercept=FALSE)
       BETA.BCHonly[,j] <- as.vector(m$beta)
     }
   }
@@ -75,7 +75,7 @@ GroupEff_par <- function(S.MGB, S.BCH, n.MGB, n.BCH, U.MGB, U.BCH, V.MGB, V.BCH,
       Y.MGB.1 <- as.vector(S.MGB[,rownames(S.MGB)%in%name.MGB])
       Y.MGB <- Y.MGB.1 - as.vector(as.matrix(U.MGB)%*%t(temp.MGB))
       V.j.MGB <- do.call(rbind, replicate(nn, U.MGB, simplify=FALSE))
-      m <- glmnet(V.j.MGB, Y.MGB, alpha = 0, family = 'gaussian', lambda = lambda*2/length(Y.MGB), intercept=F)
+      m <- glmnet(V.j.MGB, Y.MGB, alpha = 0, family = 'gaussian', lambda = lambda*2/length(Y.MGB), intercept=FALSE)
       BETA.MGBonly[,j] <- as.vector(m$beta)
     }
   }
@@ -92,7 +92,7 @@ GroupEff_par <- function(S.MGB, S.BCH, n.MGB, n.BCH, U.MGB, U.BCH, V.MGB, V.BCH,
     Y.BCH <- as.vector(S.BCH[,rownames(S.BCH)%in%name.BCH]) - as.vector(as.matrix(U.BCH)%*%t(temp.BCH))
     Y <- c(Y.MGB, Y.BCH)
     V.j <- rbind(do.call(rbind, replicate(length(name.MGB), U.MGB, simplify=FALSE)), do.call(rbind, replicate(length(name.BCH), U.BCH, simplify=FALSE)))
-    m <- glmnet(V.j, Y, alpha = 0, family = 'gaussian', lambda = lambda*2/length(Y), intercept=F)
+    m <- glmnet(V.j, Y, alpha = 0, family = 'gaussian', lambda = lambda*2/length(Y), intercept=FALSE)
     return(m$beta)
   }
   stopCluster(cl)

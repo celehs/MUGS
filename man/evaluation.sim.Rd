@@ -4,12 +4,14 @@
 \alias{evaluation.sim}
 \title{Function Used For Tuning And Evaluation}
 \usage{
-evaluation.sim(pairs.rel, U)
+evaluation.sim(pairs.rel, U, seed = NULL)
 }
 \arguments{
 \item{pairs.rel}{the known code-code pairs}
 
 \item{U}{the code embedding matrix}
+
+\item{seed}{Optional integer for reproducibility of sampling.}
 }
 \value{
 The output of tuning and evaluation

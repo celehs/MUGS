@@ -102,7 +102,7 @@ DataGen_rare_group <- function(seed, p, n1, n2, n.common, n.group, sigma.eps.1, 
   supp.cov.beta.full[name.beta.full, name.beta.full] <- as.matrix(supp.cov.beta)
   supp.cov.beta.full.upper <- supp.cov.beta.full
   supp.cov.beta.full.upper[lower.tri(supp.cov.beta.full.upper, diag = TRUE)] <- 0
-  pairs.sim <- which(supp.cov.beta.full.upper!=0, arr.ind = T)
+  pairs.sim <- which(supp.cov.beta.full.upper!=0, arr.ind = TRUE)
   pairs.sim <- as.data.frame(pairs.sim)
   pairs.sim$type <- rep('similarity', length(pairs.sim$row))
   pairs.sim$row <- as.character(pairs.sim$row)
@@ -123,8 +123,8 @@ DataGen_rare_group <- function(seed, p, n1, n2, n.common, n.group, sigma.eps.1, 
   supp.cov.delta.2.upper <- supp.cov.delta.2
   supp.cov.delta.2.upper[lower.tri(supp.cov.delta.2.upper , diag = TRUE)] <- 0
   n.rel <- sum(supp.cov.u0.upper!=0) + n2*ratio.delta/network.k*(network.k*(network.k-1)/2)
-  pairs.rel.shared <- which(supp.cov.u0.upper!=0, arr.ind = T)
-  pairs.rel.2 <- which(supp.cov.delta.2.upper!=0, arr.ind = T) + n1.no
+  pairs.rel.shared <- which(supp.cov.u0.upper!=0, arr.ind = TRUE)
+  pairs.rel.2 <- which(supp.cov.delta.2.upper!=0, arr.ind = TRUE) + n1.no
   ## Merge similar and related pairs
   pairs.rel <- rbind(pairs.rel.shared, pairs.rel.2)
   pairs.rel <- as.data.frame(pairs.rel)
@@ -139,7 +139,7 @@ DataGen_rare_group <- function(seed, p, n1, n2, n.common, n.group, sigma.eps.1, 
   pairs.rel.CV <-  pairs.rel.full[idx.rel[1:floor(dim( pairs.rel.full)[1]/2) ], ]
   pairs.rel.EV <-  pairs.rel.full[idx.rel[(floor(dim(pairs.rel.full)[1]/2)+ 1):dim( pairs.rel.full)[1]], ]
 
-  idx.rare <- as.numeric(names(sort(table(c(pairs.rel.EV[,1], pairs.rel.EV[,2])), decreasing = T)))
+  idx.rare <- as.numeric(names(sort(table(c(pairs.rel.EV[,1], pairs.rel.EV[,2])), decreasing = TRUE)))
   idx.rare <- (intersect(idx.rare, (n1.no+1):N))[ (N/10+1): (N/10+n.rare)]
   #### Embeddings
   beta.full = do.call(rbind, replicate(group.size, beta, simplify=FALSE))

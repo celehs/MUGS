@@ -4,16 +4,17 @@ Title: Multisource Graph Synthesis with EHR Data
 Version: 0.1.0
 Authors@R: c(
     person(given = "Mengyan", family = "Li", email = "mengyanli@bentley.edu", role = c("cre", "aut")),
-    person(given = "Thomas", family = "Charlon", role = "ctb", comment = c(ORCID = "0000-0001-7497-0470")),
+    person(given = "Thomas", family = "Charlon", role = "ctb", comment = "ORCID: 0000-0001-7497-0470"),
     person(given = "Xiaoou", family = "Li", role = "aut"),
     person(given = "Tianxi", family = "Cai", role = "aut"),
     person(given = "PARSE", family = "LTD", email = "software@parse-health.org", role = "aut"),
     person(given = "CELEHS", family = "Team", role = "aut")
   )
 Description: We develop Multi-source Graph Synthesis (MUGS), an algorithm designed to create 
-    embeddings for pediatric EHR codes by leveraging graphical information from three distinct sources:
+    embeddings for pediatric Electronic Health Record (EHR) codes by leveraging graphical information from three distinct sources:
     (1) pediatric EHR data, (2) EHR data from the general patient population, and 
-    (3) existing hierarchical medical ontology knowledge shared across different patient populations.
+    (3) existing hierarchical medical ontology knowledge shared across different patient populations. 
+    See Li et al. (2024) <doi:10.1038/s41746-024-01320-4> for details.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

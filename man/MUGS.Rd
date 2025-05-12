@@ -5,13 +5,13 @@
 \title{Main function for MUGS algorithm}
 \usage{
 MUGS(
-  TUNE = F,
-  Eva = T,
+  TUNE = FALSE,
+  Eva = TRUE,
   Lambda = c(10),
   Lambda.delta = c(1000),
   n.core = 4,
   tol = 1,
-  seed = 1,
+  seed = NULL,
   S.1 = NULL,
   S.2 = NULL,
   X.group.source = NULL,
@@ -19,42 +19,45 @@ MUGS(
   pairs.rel.CV = NULL,
   pairs.rel.EV = NULL,
   p = 100,
-  n.group = 400
+  n.group = 400,
+  outdir = NULL
 )
 }
 \arguments{
-\item{TUNE}{Logical value indicating whether the function should tune parameters 'TRUE' or use predefined parameters 'FALSE'.}
+\item{TUNE}{Logical value indicating whether the function should tune parameters TRUE or use predefined parameters FALSE.}
 
 \item{Eva}{Logical value indicating whether to perform evaluation (TRUE) or skip it (FALSE).}
 
-\item{Lambda}{The candidate values for the tuning parameter controls the intensity of penalization on the code effects.}
+\item{Lambda}{The candidate values for the tuning parameter controlling the intensity of penalization on the code effects.}
 
-\item{Lambda.delta}{The candidate values for the tuning parameter controls the intensity of penalization on the code-site effects.}
+\item{Lambda.delta}{The candidate values for the tuning parameter controlling the intensity of penalization on the code-site effects.}
 
 \item{n.core}{Integer specifying the number of cores to use for parallel processing.}
 
 \item{tol}{Numeric value representing the tolerance level for convergence in the algorithm.}
 
-\item{seed}{Integer used to set the seed for random number generation, ensuring reproducibility of the simulated data or any stochastic process within the algorithm.}
+\item{seed}{Integer used to set the seed for random number generation, ensuring reproducibility. Set to NULL to disable.}
 
 \item{S.1}{The SPPMI matrix from site 1.}
 
 \item{S.2}{The SPPMI matrix from site 2.}
 
-\item{X.group.source}{The dummy matrix on the group structure of codes at site 1.}
+\item{X.group.source}{The dummy matrix representing the group structure of codes at site 1.}
 
-\item{X.group.target}{The dummy matrix on the group structure of codes at site 2.}
+\item{X.group.target}{The dummy matrix representing the group structure of codes at site 2.}
 
-\item{pairs.rel.CV}{Code-code pairs used for tuning via cross validation}
+\item{pairs.rel.CV}{Code-code pairs used for tuning via cross-validation.}
 
-\item{pairs.rel.EV}{Code-code pairs used for evaluation}
+\item{pairs.rel.EV}{Code-code pairs used for evaluation.}
 
 \item{p}{Integer indicating the length of embeddings.}
 
 \item{n.group}{The number of groups.}
+
+\item{outdir}{Optional directory to write output files. Defaults to a temporary directory.}
 }
 \value{
-The final result
+A list or saved files containing the embedding matrices, similarity matrices, and site-heterogeneous code analysis.
 }
 \description{
 Main function for MUGS algorithm

@@ -21,5 +21,7 @@ download_example_data <- function(file, cache_dir = tools::R_user_dir("MUGS", wh
     utils::download.file(url, dest, mode = "wb")
   }
 
-  load(dest, envir = .GlobalEnv)
+  data_env <- new.env()
+  load(dest, envir = data_env)
+  return(as.list(data_env))
 }
