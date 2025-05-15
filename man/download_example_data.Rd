@@ -17,9 +17,3 @@ A list containing the loaded dataset.
 \description{
 Download and Load Example Data from Zenodo
 }
-\examples{
-\donttest{
-data_list <- download_example_data("S.1.Rdata")
-S.1 <- data_list[["S.1"]]
-}
-}

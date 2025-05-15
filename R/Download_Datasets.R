@@ -6,11 +6,7 @@
 #' @return A list containing the loaded dataset.
 #' @export
 #'
-#' @examples
-#' \donttest{
-#' data_list <- download_example_data("S.1.Rdata")
-#' S.1 <- data_list[["S.1"]]
-#' }
+
 download_example_data <- function(file, destdir = tempdir()) {
   base_url <- "https://zenodo.org/records/14776064/files/"
   dest <- file.path(destdir, file)
