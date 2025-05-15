@@ -28,13 +28,19 @@ utils::globalVariables(c(
 #'
 
 
-DataGen_rare_group <- function(seed, p, n1, n2, n.common, n.group, sigma.eps.1, sigma.eps.2, ratio.delta, network.k, rho.beta, rho.U0, rho.delta, sigma.rare, n.rare, group.size){
+DataGen_rare_group <- function(seed = NULL, p, n1, n2, n.common, n.group, sigma.eps.1, sigma.eps.2, ratio.delta, network.k, rho.beta, rho.U0, rho.delta, sigma.rare, n.rare, group.size){
   required_packages <- c("Matrix", "MASS", "fastDummies", "rsvd", "Rcpp", "RcppArmadillo", "inline")
 
   # Check for missing packages and stop if any are not installed
   missing_packages <- required_packages[!sapply(required_packages, requireNamespace, quietly = TRUE)]
   if (length(missing_packages) > 0) {
     stop("Missing packages need to be installed: ", paste(missing_packages, collapse = ", "), call. = FALSE)
+  }
+  # check for seeds
+  if (!is.null(seed)) {
+    old_seed <- .Random.seed
+    set.seed(seed)
+    on.exit({ if (exists("old_seed")) .Random.seed <<- old_seed }, add = TRUE)
   }
 
   # Load required packages
@@ -49,9 +55,8 @@ DataGen_rare_group <- function(seed, p, n1, n2, n.common, n.group, sigma.eps.1, 
   arma::mat Y = arma::randn(n, ncols);
   return wrap(arma::repmat(mu, 1, n).t() + Y * arma::chol(sigma));
   '
-  rmvnorm.rcpp <- cxxfunction(signature(n_="integer", mu_="numeric", sigma_="matrix"), code, plugin="RcppArmadillo", verbose=TRUE)
+  rmvnorm.rcpp <- cxxfunction(signature(n_="integer", mu_="numeric", sigma_="matrix"), code, plugin="RcppArmadillo", verbose=FALSE)
 
-  set.seed(seed)
   N = n1 + n2 - n.common
   n1.no = n1 - n.common
   n2.no = n2 - n.common
@@ -86,7 +91,7 @@ DataGen_rare_group <- function(seed, p, n1, n2, n.common, n.group, sigma.eps.1, 
   Sigma.delta.2 <- Matrix::bdiag(replicate(n2*ratio.delta/network.k, Sigma.delta.0, simplify=FALSE))
   delta1.temp <- mvrnorm(p, rep(0,n1*ratio.delta), Sigma.delta.1)
   delta2.temp <- mvrnorm(p, rep(0,n2*ratio.delta), Sigma.delta.2)
-  set.seed(1)
+
   idx1 <- sample(n.common, ncol(delta1.temp)) + n1.no
   idx2 <- sample(n.common, ncol(delta2.temp))
   delta1 <- matrix(0, n1, p)
@@ -134,7 +139,7 @@ DataGen_rare_group <- function(seed, p, n1, n2, n.common, n.group, sigma.eps.1, 
   pairs.rel <- pairs.rel[!(duplicated(pairs.rel)),]
   pairs.rel.full <- rbind(pairs.sim, pairs.rel)
   pairs.rel.full$type <- 'related'
-  set.seed(1)
+
   idx.rel <- sample(1:dim( pairs.rel.full)[1])
   pairs.rel.CV <-  pairs.rel.full[idx.rel[1:floor(dim( pairs.rel.full)[1]/2) ], ]
   pairs.rel.EV <-  pairs.rel.full[idx.rel[(floor(dim(pairs.rel.full)[1]/2)+ 1):dim( pairs.rel.full)[1]], ]
@@ -153,7 +158,7 @@ DataGen_rare_group <- function(seed, p, n1, n2, n.common, n.group, sigma.eps.1, 
   S.2.0 <- u.2%*%t(u.2)
   S.miss.0 <- u.1[1:n1.no, ]%*%t(u.2[(n.common+1):n2, ])
   ## Add noise
-  set.seed(seed)
+
   err.1 <- matrix(rnorm(n1^2, 0, sigma.eps.1), n1, n1)
   S.1 <- S.1.0 + err.1
   #### Add noises for rare codes in target

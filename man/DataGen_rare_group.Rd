@@ -6,7 +6,7 @@
 Generate SPPMIs, dummy matrices based on prior group structures, and code-code pairs for tuning and evaluation}
 \usage{
 DataGen_rare_group(
-  seed,
+  seed = NULL,
   p,
   n1,
   n2,
